@@ -42,8 +42,8 @@ describe("generation orchestration", () => {
       ]);
       expect(run.usage.calls).toHaveLength(2);
       expect(run.promptVersions).toEqual({
-        emit: "punch.emit.v1",
-        critique: "punch.critique.v1",
+        emit: "punch.emit.v2",
+        critique: "punch.critique.v2",
       });
     },
   );

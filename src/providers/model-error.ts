@@ -1,8 +1,4 @@
-import type {
-  GenerationStage,
-  ModelAttempt,
-  ModelUsage,
-} from "./text-model.js";
+import type { ModelStage, ModelAttempt, ModelUsage } from "./text-model.js";
 
 /** Safe provider-neutral failure categories. */
 export type ModelErrorCode =
@@ -20,7 +16,7 @@ export type ModelErrorCode =
 export type ModelErrorDetails = Readonly<{
   code: ModelErrorCode;
   retryable: boolean;
-  stage?: GenerationStage;
+  stage?: ModelStage;
   attempt?: ModelAttempt;
   usage?: ModelUsage;
 }>;
@@ -41,7 +37,7 @@ const SAFE_MESSAGES: Readonly<Record<ModelErrorCode, string>> = {
 export class TextModelError extends Error {
   readonly code: ModelErrorCode;
   readonly retryable: boolean;
-  readonly stage: GenerationStage | undefined;
+  readonly stage: ModelStage | undefined;
   readonly attempt: ModelAttempt | undefined;
   readonly usage: ModelUsage | undefined;
 
@@ -58,7 +54,7 @@ export class TextModelError extends Error {
 
 /** Returns a safe cancellation error for the current model request. */
 export function modelCancelled(
-  stage: GenerationStage,
+  stage: ModelStage,
   attempt: ModelAttempt,
 ): TextModelError {
   return new TextModelError({

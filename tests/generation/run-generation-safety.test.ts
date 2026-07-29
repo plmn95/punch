@@ -113,7 +113,7 @@ describe("generation cancellation, errors, and prompts", () => {
     expect(firstRequest).toMatchObject({
       stage: "emit",
       attempt: "primary",
-      promptVersion: "punch.emit.v1",
+      promptVersion: "punch.emit.v2",
       maxOutputTokens: 16_000,
     });
     expect(firstRequest?.user).not.toContain(maliciousInstructions);

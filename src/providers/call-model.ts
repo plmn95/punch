@@ -1,14 +1,7 @@
-import {
-  isTextModelError,
-  normaliseProviderUsage,
-  TextModelError,
-} from "../providers/index.js";
-import type {
-  ModelRequest,
-  ModelResponse,
-  TextModel,
-} from "../providers/index.js";
-import { createLinkedDeadline, throwIfModelAborted } from "./abort.js";
+import { isTextModelError, TextModelError } from "./model-error.js";
+import { normaliseProviderUsage } from "./model-usage.js";
+import type { ModelRequest, ModelResponse, TextModel } from "./text-model.js";
+import { createLinkedDeadline, throwIfModelAborted } from "./deadline.js";
 
 const MAX_MODEL_RESPONSE_BYTES = 128_000;
 const STOP_REASONS = new Set(["complete", "max-output", "refusal", "unknown"]);

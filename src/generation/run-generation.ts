@@ -13,11 +13,12 @@ import {
 } from "../core/schemas/index.js";
 import {
   aggregateModelUsage,
+  createLinkedDeadline,
+  throwIfModelAborted,
   type GenerationUsage,
   type ModelCallUsage,
   type TextModel,
 } from "../providers/index.js";
-import { createLinkedDeadline, throwIfModelAborted } from "./abort.js";
 import { GenerationError, toGenerationError } from "./generation-error.js";
 import {
   buildCritiquePrompt,

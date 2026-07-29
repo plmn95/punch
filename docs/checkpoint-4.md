@@ -1,8 +1,8 @@
 # Phase 2 checkpoint 4
 
-Status: local review candidate. This checkpoint turns the clean-room renderer
-into a strong standalone-email candidate, adds fail-closed render validation,
-and supplies exact desktop/mobile visual evidence for Plamen's gate.
+Status: approved. Plamen approved commit
+`205236ec9ad0b1c196c222ed19ac46e560d0f831` and all eight exact rendered states
+on 29 July 2026, closing `P2-C4` and `VIS-1`.
 
 ## Authority and boundary
 
@@ -207,5 +207,6 @@ evaluations. Compliance placeholders still require caller translation and
 lawful sending responsibilities. `FIX-1`, `DEP-1`, `SEC-4`, `PKG-1`, `QA-1`,
 licensing, remote creation, and publication remain open, deferred, or held.
 
-`P2-C4` and `VIS-1` remain open until Plamen reviews the exact local commit and
-these eight rendered states. No later checkpoint is authorised by this record.
+`P2-C4` and `VIS-1` are closed by Plamen's exact commit and visual approval.
+That approval authorised checkpoint 5 only; no later checkpoint is authorised
+by this record.

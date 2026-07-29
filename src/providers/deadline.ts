@@ -1,5 +1,5 @@
-import { modelCancelled, TextModelError } from "../providers/index.js";
-import type { GenerationStage, ModelAttempt } from "../providers/index.js";
+import { modelCancelled, TextModelError } from "./model-error.js";
+import type { ModelAttempt, ModelStage } from "./text-model.js";
 
 type DeadlineKind = "call" | "run";
 
@@ -41,6 +41,9 @@ export function createLinkedDeadline(
     abortFromParent();
   } else {
     parent.addEventListener("abort", abortFromParent, { once: true });
+    if (parent.aborted) {
+      abortFromParent();
+    }
   }
 
   return {
@@ -55,7 +58,7 @@ export function createLinkedDeadline(
 /** Throws a safe cancellation or timeout error for an aborted signal. */
 export function throwIfModelAborted(
   signal: AbortSignal,
-  stage: GenerationStage,
+  stage: ModelStage,
   attempt: ModelAttempt,
 ): void {
   if (!signal.aborted) {

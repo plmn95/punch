@@ -1,6 +1,12 @@
 /** Semantic generation stages understood by the internal model seam. */
 export type GenerationStage = "emit" | "critique" | "revise";
 
+/** Source-extraction stages understood by the internal model seam. */
+export type ExtractionStage = "extract-brand";
+
+/** Every bounded semantic stage supported by one configured text model. */
+export type ModelStage = GenerationStage | ExtractionStage;
+
 /** Attempt kind within one semantic generation stage. */
 export type ModelAttempt = "primary" | "repair";
 
@@ -17,7 +23,7 @@ export type ModelUsage = Readonly<{
 
 /** Provider-neutral request passed to the injected text model. */
 export type ModelRequest = Readonly<{
-  stage: GenerationStage;
+  stage: ModelStage;
   attempt: ModelAttempt;
   promptVersion: string;
   system: string;

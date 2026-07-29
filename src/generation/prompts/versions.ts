@@ -1,8 +1,8 @@
 /** Manually versioned, newly authored Punch generation prompts. */
 export const PROMPT_VERSIONS = Object.freeze({
-  emit: "punch.emit.v1",
-  critique: "punch.critique.v1",
-  revise: "punch.revise.v1",
+  emit: "punch.emit.v2",
+  critique: "punch.critique.v2",
+  revise: "punch.revise.v2",
   repair: "punch.structured-repair.v1",
 });
 

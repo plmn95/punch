@@ -28,7 +28,8 @@ gate.
 | P2-C1  | Phase 2 checkpoint 1 review                            | Closed   | Plamen                                 | Plamen approved commit `7225f2b3ab6adac669f842558912167c854ec876` on 29 July 2026                                                                                                         |
 | P2-C2  | Phase 2 checkpoint 2 review                            | Closed   | Plamen                                 | Plamen approved commit `20c83ca4f300eda4a1d82751a206c8ed46704a39` on 29 July 2026                                                                                                         |
 | P2-C3  | Phase 2 checkpoint 3 review                            | Closed   | Plamen                                 | Plamen approved commit `ce0e9305181579d599a64a2171bc9c7a0a54e638` on 29 July 2026                                                                                                         |
-| P2-C4  | Phase 2 checkpoint 4 review                            | Open     | Plamen                                 | Exact local standalone-quality commit, deterministic render checks, package/provenance proof, eight reviewed 820px/390px image and image-free renders, and Plamen approval                |
+| P2-C4  | Phase 2 checkpoint 4 review                            | Closed   | Plamen                                 | Plamen approved commit `205236ec9ad0b1c196c222ed19ac46e560d0f831` and its eight exact rendered states on 29 July 2026                                                                     |
+| P2-C5  | Phase 2 checkpoint 5 review                            | Open     | Plamen                                 | Exact local extraction commit, hardened-fetch/security evidence, deterministic parser and model-fallback proof, input-to-generation integration, package review, and Plamen approval      |
 | OWN-1  | Copyright ownership/assignment for code candidates     | Open     | Plamen or designated rights reviewer   | Written evidence covering every copied/adapted source surface, including employee/contractor assignment and intentional open-source redistribution                                        |
 | IP-1   | Prompt and model-material rights                       | Open     | Plamen or designated rights reviewer   | Per-prompt authorship, assignment, public-release decision, content review, source hash, destination, and transfer/rewrite disposition                                                    |
 | NAME-1 | Punch name, package name, and marks                    | Open     | Plamen                                 | Search and decision for repository, package registry, binary name, domain/mark conflicts, and required attribution                                                                        |
@@ -37,7 +38,7 @@ gate.
 | AST-1  | Bundled assets                                         | Deferred | Plamen                                 | Empty asset set or per-asset creator/source/licence/modification/redistribution ledger; no source/Punchline/placeholder assets                                                            |
 | DEP-1  | Dependency and supply-chain review                     | Open     | Implementation reviewer                | Fresh lockfile; direct/transitive licence and notice inventory; vulnerability, install-script, maintenance, version, provenance, and packed-size review                                   |
 | SEC-1  | Candidate secret, PII, and private-reference scan      | Deferred | Security reviewer designated by Plamen | Clean working-tree, Git-object, generated-output, and package-tarball scans plus manual review; findings resolved without recording secret values                                         |
-| SEC-2  | Hardened public fetching                               | Deferred | Implementation reviewer                | Tests for URL parsing, mixed public/private DNS, pinning/rebinding, peers, redirects, exact-origin CSS, MIME, compression, aggregate limits, deadlines, and cancellation                  |
+| SEC-2  | Hardened public fetching                               | Closed   | Implementation reviewer                | Checkpoint-5 hardened-fetch matrix and independent security PASS recorded in `docs/checkpoint-5.md`                                                                                       |
 | SEC-3  | Source-content and prompt-injection containment        | Open     | Implementation reviewer                | Tests proving fetched content cannot change instructions, tools, provider/model, paths, stages, or policy; bounded/delimited model input; malicious fictional fixture passes safely       |
 | SEC-4  | Product identity and factual grounding                 | Deferred | Implementation reviewer                | Single- and six-product tests proving required coverage, no unknown IDs, no cross-product fact/image/link/CTA mixing, conflict handling, and unsupported-claim failure                    |
 | SEC-5  | Filesystem and output safety                           | Deferred | Implementation reviewer                | Tests for traversal, symlink swap/TOCTOU, hard links, forged marker, special files, cross-filesystem/unsupported exchange, permissions, interruption, rollback, and arbitrary directories |
@@ -46,7 +47,7 @@ gate.
 | CMP-1  | Compliance-placeholder documentation                   | Deferred | Plamen                                 | Public docs state placeholder replacement is necessary but not sufficient and assign consent, identity, address, unsubscribe, destination, and jurisdiction responsibility to callers     |
 | PKG-1  | Package contents and reproducibility                   | Open     | Implementation reviewer                | Clean clone/install/build/test; binary/import smoke tests; deterministic packed-file list; tarball inspection; no instructions, traces, private refs, fixtures, or unapproved assets      |
 | QA-1   | Functional release quality                             | Deferred | Plamen                                 | All six fictional evaluations, deterministic validators, failure artefacts, explicit CLI, output writer, and documented checks pass                                                       |
-| VIS-1  | Standalone email visual quality                        | Open     | Plamen                                 | Real rendered single- and six-product HTML approved at 820px and 390px; image and image-free cases reviewed                                                                               |
+| VIS-1  | Standalone email visual quality                        | Closed   | Plamen                                 | Plamen approved checkpoint-4 commit `205236ec9ad0b1c196c222ed19ac46e560d0f831` and all 820px/390px image and image-free renders on 29 July 2026                                           |
 | DOC-1  | Public documentation and claims                        | Deferred | Plamen                                 | Install/use/privacy/compliance/security/limitations documentation reviewed; no claim that output is automatically ready to send                                                           |
 | HIST-1 | Public-history boundary                                | Open     | Plamen                                 | Decision whether internal Phase 1 extraction records are public; review proves no private source history, object, patch, or unapproved internal path is reachable                         |
 | REM-1  | Remote creation                                        | Hold     | Plamen                                 | Separate explicit approval naming host, repository, owner, visibility, initial history, and remote name                                                                                   |
@@ -68,9 +69,15 @@ inventory do not close `DEP-1`, `PKG-1`, `SEC-4`, `QA-1`, or `VIS-1`.
 Plamen approved checkpoint 3's exact local commit on 29 July 2026. Checkpoint 4
 adds independently written renderer quality, two newly fictional campaign
 fixtures, eight deterministic final-HTML checks, adversarial validator review,
-and exact Chrome-reviewed desktop/mobile evidence. `P2-C4` and `VIS-1` remain
-Open for Plamen's review; this evidence does not close `FIX-1`, `DEP-1`,
-`PKG-1`, `SEC-4`, or `QA-1`.
+and exact Chrome-reviewed desktop/mobile evidence. Plamen approved its exact
+commit and all eight rendered states on 29 July 2026, closing `P2-C4` and
+`VIS-1`. This does not close `FIX-1`, `DEP-1`, `PKG-1`, `SEC-4`, or `QA-1`.
+
+Checkpoint 5 independently adds hardened fetching, deterministic source
+extraction, bounded brand-tone classification, and an internal
+extraction-to-generation connection. Its adversarial matrix and independent
+security review close `SEC-2`. `P2-C5`, `SEC-3`, `SEC-4`, `SEC-6`, `DEP-1`,
+`PKG-1`, and the broader release gates remain open, deferred, or held.
 
 ## Ownership extraction ledger
 
@@ -275,6 +282,6 @@ No step may be skipped:
 10. Verify remote visibility, reachable objects, default branch, release
     contents, package contents, and published checks.
 
-Step 1 and Phase 2 checkpoints 1–3 are complete. Checkpoint 4 has entered local
-review; later checkpoints and steps 2–10 are not complete. The absence of a
-remote is an intentional safety condition, not missing work.
+Step 1 and Phase 2 checkpoints 1–4 are complete. Checkpoint 5 has entered local
+review; no later checkpoint or steps 2–10 are authorised or complete. The
+absence of a remote is an intentional safety condition, not missing work.

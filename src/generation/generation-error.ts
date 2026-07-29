@@ -3,6 +3,7 @@ import type {
   GenerationUsage,
   ModelAttempt,
   ModelErrorCode,
+  ModelStage,
   ModelUsage,
 } from "../providers/index.js";
 import {
@@ -98,12 +99,13 @@ function fromModelError(
   error: {
     code: ModelErrorCode;
     retryable: boolean;
-    stage: GenerationStage | undefined;
+    stage: ModelStage | undefined;
     attempt: ModelAttempt | undefined;
     usage: ModelUsage | undefined;
   },
   usage: GenerationUsage,
 ): GenerationError {
+  const stage = asGenerationStage(error.stage);
   const code =
     error.code === "cancelled"
       ? "cancelled"
@@ -115,7 +117,7 @@ function fromModelError(
     retryable: error.retryable,
     usage,
     providerCode: error.code,
-    ...(error.stage ? { stage: error.stage } : {}),
+    ...(stage ? { stage } : {}),
     ...(error.attempt ? { attempt: error.attempt } : {}),
   });
 }
@@ -123,20 +125,21 @@ function fromModelError(
 /** Adds safe provider-error usage when its stage and attempt are known. */
 function usageWithModelError(
   error: {
-    stage: GenerationStage | undefined;
+    stage: ModelStage | undefined;
     attempt: ModelAttempt | undefined;
     usage: ModelUsage | undefined;
   },
   usage: GenerationUsage,
 ): GenerationUsage {
-  if (!error.stage || !error.attempt || !error.usage) {
+  const stage = asGenerationStage(error.stage);
+  if (!stage || !error.attempt || !error.usage) {
     return usage;
   }
   try {
     return aggregateModelUsage([
       ...usage.calls,
       {
-        stage: error.stage,
+        stage,
         attempt: error.attempt,
         usage: normaliseProviderUsage(error.usage),
       },
@@ -144,4 +147,13 @@ function usageWithModelError(
   } catch {
     return usage;
   }
+}
+
+/** Narrows provider stages to the three stages owned by generation. */
+function asGenerationStage(
+  stage: ModelStage | undefined,
+): GenerationStage | undefined {
+  return stage === "emit" || stage === "critique" || stage === "revise"
+    ? stage
+    : undefined;
 }

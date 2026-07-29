@@ -1,6 +1,9 @@
 import type { z } from "zod";
 
-import { serialiseOutputSchema, serialisePromptData } from "./serialise.js";
+import {
+  serialiseOutputSchema,
+  serialisePromptData,
+} from "../../providers/index.js";
 import type { ModelPrompt } from "./types.js";
 import { PROMPT_VERSIONS } from "./versions.js";
 

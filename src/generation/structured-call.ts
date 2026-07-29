@@ -2,12 +2,12 @@ import type { z } from "zod";
 
 import {
   aggregateModelUsage,
+  callModel,
   TextModelError,
   type ModelCallUsage,
   type ModelResponse,
   type TextModel,
 } from "../providers/index.js";
-import { callModel } from "./call-model.js";
 import { GenerationError } from "./generation-error.js";
 import { buildRepairPrompt, type ModelPrompt } from "./prompts/index.js";
 
