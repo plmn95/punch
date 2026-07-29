@@ -120,7 +120,7 @@ function renderedProductIds(html: string): string[] {
 }
 
 it.each([1, 6])(
-  "carries %s input-order product identities through generation and rendering",
+  "grounds and renders %s input-order product presentations",
   async (productCount) => {
     const productUrls = Array.from(
       { length: productCount },
@@ -151,6 +151,7 @@ it.each([1, 6])(
         (binding) => binding.productId,
       ),
     ).toEqual(expectedIds);
+    expect(result.generation.grounding).toEqual({ valid: true, issues: [] });
     expect(renderedProductIds(html)).toEqual(expectedIds);
     for (const request of model.requests) {
       for (const productId of expectedIds) {

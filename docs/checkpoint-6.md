@@ -1,8 +1,8 @@
 # Phase 2 checkpoint 6
 
-Status: local review candidate. This checkpoint makes product identity
-canonical and carries explicit product-to-block metadata through the existing
-semantic pipeline.
+Status: approved checkpoint. This checkpoint makes product identity canonical
+and carries explicit product-to-block metadata through the existing semantic
+pipeline.
 
 ## Authority and boundary
 
@@ -10,6 +10,8 @@ semantic pipeline.
   `f6976d1b0081626f18e6e18a4c932a3420c2919c`.
 - Plamen approved checkpoint 5 and authorised continuation into checkpoint 6
   on 29 July 2026.
+- Plamen approved the exact checkpoint-6 commit
+  `c26eb751330ba573769a94ab162f687d5c58c1c5` on 29 July 2026.
 - The implementation is an independent Punch change based on the approved
   public contract and newly fictional tests.
 - No private Punchline source, prompt, fixture, snapshot, asset, campaign, or
@@ -172,8 +174,8 @@ asset, binary, remote, or publication configuration changes are required.
 ## Limits and next gate
 
 `P2-C5` is closed by Plamen's approval of exact commit
-`f6976d1b0081626f18e6e18a4c932a3420c2919c`. `P2-C6` remains open until Plamen
-approves the exact local checkpoint-6 commit.
+`f6976d1b0081626f18e6e18a4c932a3420c2919c`. Plamen's approval of exact commit
+`c26eb751330ba573769a94ab162f687d5c58c1c5` closes `P2-C6`.
 
 `SEC-4` remains deferred. Checkpoint 7 must add an independent deterministic
 campaign-to-evidence validator and prove single- and six-product required

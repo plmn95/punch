@@ -30,7 +30,8 @@ gate.
 | P2-C3  | Phase 2 checkpoint 3 review                            | Closed   | Plamen                                 | Plamen approved commit `ce0e9305181579d599a64a2171bc9c7a0a54e638` on 29 July 2026                                                                                                         |
 | P2-C4  | Phase 2 checkpoint 4 review                            | Closed   | Plamen                                 | Plamen approved commit `205236ec9ad0b1c196c222ed19ac46e560d0f831` and its eight exact rendered states on 29 July 2026                                                                     |
 | P2-C5  | Phase 2 checkpoint 5 review                            | Closed   | Plamen                                 | Plamen approved commit `f6976d1b0081626f18e6e18a4c932a3420c2919c` on 29 July 2026                                                                                                         |
-| P2-C6  | Phase 2 checkpoint 6 review                            | Open     | Plamen                                 | Exact local identity commit, canonical input-order product-ID proof, product-block referential integrity, single/six-product render-marker proof, and Plamen approval                     |
+| P2-C6  | Phase 2 checkpoint 6 review                            | Closed   | Plamen                                 | Plamen approved commit `c26eb751330ba573769a94ab162f687d5c58c1c5` on 29 July 2026                                                                                                         |
+| P2-C7  | Phase 2 checkpoint 7 review                            | Open     | Plamen                                 | Exact local grounding commit, evidence-reference preflight, single/six-product coverage and fact-association proof, independent reviews, and Plamen approval                              |
 | OWN-1  | Copyright ownership/assignment for code candidates     | Open     | Plamen or designated rights reviewer   | Written evidence covering every copied/adapted source surface, including employee/contractor assignment and intentional open-source redistribution                                        |
 | IP-1   | Prompt and model-material rights                       | Open     | Plamen or designated rights reviewer   | Per-prompt authorship, assignment, public-release decision, content review, source hash, destination, and transfer/rewrite disposition                                                    |
 | NAME-1 | Punch name, package name, and marks                    | Open     | Plamen                                 | Search and decision for repository, package registry, binary name, domain/mark conflicts, and required attribution                                                                        |
@@ -41,7 +42,7 @@ gate.
 | SEC-1  | Candidate secret, PII, and private-reference scan      | Deferred | Security reviewer designated by Plamen | Clean working-tree, Git-object, generated-output, and package-tarball scans plus manual review; findings resolved without recording secret values                                         |
 | SEC-2  | Hardened public fetching                               | Closed   | Implementation reviewer                | Checkpoint-5 hardened-fetch matrix and independent security PASS recorded in `docs/checkpoint-5.md`                                                                                       |
 | SEC-3  | Source-content and prompt-injection containment        | Open     | Implementation reviewer                | Tests proving fetched content cannot change instructions, tools, provider/model, paths, stages, or policy; bounded/delimited model input; malicious fictional fixture passes safely       |
-| SEC-4  | Product identity and factual grounding                 | Deferred | Implementation reviewer                | Single- and six-product tests proving required coverage, no unknown IDs, no cross-product fact/image/link/CTA mixing, conflict handling, and unsupported-claim failure                    |
+| SEC-4  | Product identity and factual grounding                 | Open     | Implementation reviewer                | Checkpoint-7 structured product proof plus checkpoint-9 source-aware failure for unsupported and availability claims in generated prose                                                   |
 | SEC-5  | Filesystem and output safety                           | Deferred | Implementation reviewer                | Tests for traversal, symlink swap/TOCTOU, hard links, forged marker, special files, cross-filesystem/unsupported exchange, permissions, interruption, rollback, and arbitrary directories |
 | SEC-6  | Provider, credential, deadline, and error safety       | Open     | Implementation reviewer                | Injected-provider, deadline, cancellation, JSON stdout, and secret/PII canary tests across errors, campaign, validation, and traces; no key reads in core                                 |
 | PRIV-1 | Trace and data disclosure                              | Deferred | Plamen                                 | Field-level allowlists, versioned redaction policy, opt-in/cap/deletion behaviour, canary tests, no raw payloads/snippets, and Anthropic/remote-image disclosure                          |
@@ -83,10 +84,17 @@ security review close `SEC-2`. Plamen approved its exact commit, closing
 Checkpoint 6 makes IDs canonical in input order, carries explicit identity
 through the two approved product-bearing structures, rejects references to no
 current context product during emit and revision, and proves identity markers
-survive single- and six-product rendering. It does not compare generated
-product facts with evidence or require complete product coverage. `P2-C6`,
-`SEC-3`, `SEC-4`, `SEC-6`, `DEP-1`, `PKG-1`, and the broader release gates
-remain open, deferred, or held.
+survive single- and six-product rendering. Plamen approved its exact commit,
+closing `P2-C6`.
+
+Checkpoint 7 adds pre-model product-evidence ownership checks and deterministic
+coverage and structured-fact validation for every product feature and grid
+item. It also rejects exact known product resources from every identity-free
+link and image slot, including rendered inline-Markdown links. It does not
+interpret availability or unsupported claims in general campaign prose
+because those fields have no product binding; that source-aware work remains
+checkpoint 9. `P2-C7`, `SEC-3`, `SEC-4`, `SEC-6`, `DEP-1`, `PKG-1`, and the
+broader release gates remain open, deferred, or held.
 
 ## Ownership extraction ledger
 
@@ -291,6 +299,6 @@ No step may be skipped:
 10. Verify remote visibility, reachable objects, default branch, release
     contents, package contents, and published checks.
 
-Step 1 and Phase 2 checkpoints 1–5 are complete. Checkpoint 6 has entered local
+Step 1 and Phase 2 checkpoints 1–6 are complete. Checkpoint 7 has entered local
 review; no later checkpoint or steps 2–10 are authorised or complete. The
 absence of a remote is an intentional safety condition, not missing work.

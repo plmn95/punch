@@ -6,14 +6,17 @@ import type {
   GenerationContext,
   RevisionOutputPayload,
 } from "../core/schemas/index.js";
-import { collectProductBlockBindings } from "../core/product-bindings.js";
+import { validateCampaignGrounding } from "../validation/campaign-grounding-validation.js";
 
 /** Reports caller-owned goal and structured-offer invariant failures. */
 export function campaignStageIssues(
   campaign: CampaignDraftPayload,
   context: GenerationContext,
 ): string[] {
-  const issues = productBindingIssues(campaign, context);
+  const issues: string[] = validateCampaignGrounding(
+    campaign,
+    context,
+  ).issues.map((issue) => issue.code);
   if (campaign.goal !== context.goal) {
     issues.push("goal-mismatch");
   }
@@ -29,25 +32,15 @@ export function campaignStageIssues(
   return [...new Set(issues)];
 }
 
-/** Rejects product-bearing blocks that reference no current input product. */
-function productBindingIssues(
-  campaign: CampaignDraftPayload,
-  context: GenerationContext,
-): string[] {
-  const knownIds = new Set(
-    context.products.map((product) => product.productId),
-  );
-  return collectProductBlockBindings(campaign).some(
-    (binding) => !knownIds.has(binding.productId),
-  )
-    ? ["unknown-product-id"]
-    : [];
-}
-
 /** Reports discount-code facts that do not match the structured offer. */
 function discountCodeIssues(
-  block: Readonly<{ code: string; endsAt?: string | undefined }>,
+  block: Readonly<{
+    code: string;
+    description?: string | undefined;
+    endsAt?: string | undefined;
+  }>,
   offer: Readonly<{
+    description: string;
     code?: string | undefined;
     endsAt?: string | undefined;
   }>,
@@ -57,6 +50,12 @@ function discountCodeIssues(
     issues.push("discount-code-without-offer-code");
   } else if (block.code !== offer.code) {
     issues.push("discount-code-mismatch");
+  }
+  if (
+    block.description !== undefined &&
+    block.description !== offer.description
+  ) {
+    issues.push("discount-description-mismatch");
   }
   if (block.endsAt !== undefined && block.endsAt !== offer.endsAt) {
     issues.push("discount-end-mismatch");

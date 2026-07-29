@@ -201,7 +201,7 @@ export function createCampaignPayload(
         ? [
             {
               type: "discount-code" as const,
-              description: "Use the supplied offer at checkout.",
+              description: "Save 15% on the selected cups.",
               code: "CUP15",
               endsAt: "2027-02-14T23:59:00+02:00",
             },

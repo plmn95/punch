@@ -5,6 +5,7 @@ import { runGeneration } from "../../src/generation/run-generation.js";
 import {
   createCritiquePayload,
   createGenerationContext,
+  createProductEvidence,
 } from "../factories.js";
 import {
   modelResponse,
@@ -15,6 +16,13 @@ import {
 function singleProductCampaign(
   productId: "product-01" | "product-02",
 ): CampaignDraftPayload {
+  const product = createProductEvidence(productId === "product-01" ? 1 : 2);
+  if (
+    product.name.state !== "observed" ||
+    product.canonicalUrl.state !== "observed"
+  ) {
+    throw new Error("The fictional product identity must be observed.");
+  }
   return {
     schemaVersion: "0.1.0",
     goal: "sales",
@@ -24,10 +32,10 @@ function singleProductCampaign(
       {
         type: "product-feature",
         productId,
-        name: "Ember Mug",
+        name: product.name.value,
         cta: {
           label: "View product",
-          href: "https://kiln-and-leaf.example.com/products/ember-mug",
+          href: product.canonicalUrl.value,
         },
       },
     ],

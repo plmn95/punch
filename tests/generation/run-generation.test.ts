@@ -121,11 +121,16 @@ describe("generation orchestration", () => {
     expect(run.promptVersions.repair).toBe("punch.structured-repair.v1");
   });
 
-  it("repairs invented or mismatched promotion codes and deadlines", async () => {
+  it("repairs mismatched promotion descriptions, codes, and deadlines", async () => {
     const invalid = createCampaignPayload("promotion");
     const invalidBlocks = invalid.blocks.map((block) =>
       block.type === "discount-code"
-        ? { ...block, code: "INVENTED", endsAt: "2028-01-01T00:00:00Z" }
+        ? {
+            ...block,
+            description: "Save an invented 90% at checkout.",
+            code: "INVENTED",
+            endsAt: "2028-01-01T00:00:00Z",
+          }
         : block,
     );
     const model = new QueuedTextModel([
@@ -141,6 +146,27 @@ describe("generation orchestration", () => {
 
     expect(run.finalCampaign.goal).toBe("promotion");
     expect(requestSequence(model)[1]).toBe("emit:repair");
+  });
+
+  it("fails closed when a repaired offer description still mismatches", async () => {
+    const campaign = createCampaignPayload("promotion");
+    const invalid = {
+      ...campaign,
+      blocks: campaign.blocks.map((block) =>
+        block.type === "discount-code"
+          ? { ...block, description: "Save an invented 90% at checkout." }
+          : block,
+      ),
+    };
+    const model = new QueuedTextModel([
+      jsonResponse(invalid),
+      jsonResponse(invalid),
+    ]);
+
+    await expect(
+      runGeneration(createGenerationContext({ goal: "promotion" }), { model }),
+    ).rejects.toMatchObject({ code: "invalid-model-output" });
+    expect(requestSequence(model)).toEqual(["emit:primary", "emit:repair"]);
   });
 
   it("rejects a discount-code block when no offer code was supplied", async () => {

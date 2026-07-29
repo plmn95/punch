@@ -19,6 +19,11 @@ import {
   type ModelCallUsage,
   type TextModel,
 } from "../providers/index.js";
+import {
+  assertCampaignGrounding,
+  validateProductEvidenceReferences,
+  type CampaignGroundingValidation,
+} from "../validation/campaign-grounding-validation.js";
 import { GenerationError, toGenerationError } from "./generation-error.js";
 import {
   buildCritiquePrompt,
@@ -52,6 +57,7 @@ export type GenerationRun = Readonly<{
   critique: CritiqueResult;
   revisedCampaign?: Campaign;
   addressedIssueIds?: readonly IssueId[];
+  grounding: CampaignGroundingValidation;
   usage: GenerationUsage;
   promptVersions: Readonly<{
     emit: string;
@@ -122,7 +128,7 @@ async function runStages(
   );
 
   if (!shouldRevise(critique)) {
-    return acceptedRun(draft, critique, usageCalls);
+    return acceptedRun(context, draft, critique, usageCalls);
   }
   return revisedRun(
     context,
@@ -177,6 +183,7 @@ async function callCritiqueStage(
 
 /** Returns an accepted draft without revision-shaped properties. */
 function acceptedRun(
+  context: GenerationContext,
   draft: Campaign,
   critique: CritiqueResult,
   usageCalls: readonly ModelCallUsage[],
@@ -185,6 +192,7 @@ function acceptedRun(
     finalCampaign: draft,
     draft,
     critique,
+    grounding: assertCampaignGrounding(draft, context),
     usage: aggregateModelUsage(usageCalls),
     promptVersions: {
       emit: PROMPT_VERSIONS.emit,
@@ -220,6 +228,7 @@ async function revisedRun(
     critique,
     revisedCampaign,
     addressedIssueIds: revision.addressedIssueIds,
+    grounding: assertCampaignGrounding(revisedCampaign, context),
     usage: aggregateModelUsage(usageCalls),
     promptVersions: {
       emit: PROMPT_VERSIONS.emit,
@@ -241,7 +250,7 @@ function parseContext(
   usageCalls: readonly ModelCallUsage[],
 ): GenerationContext {
   const result = GenerationContextSchema.safeParse(context);
-  if (result.success) {
+  if (result.success && generationContextIsGroundable(result.data)) {
     return result.data;
   }
   throw new GenerationError({
@@ -249,4 +258,16 @@ function parseContext(
     retryable: false,
     usage: aggregateModelUsage(usageCalls),
   });
+}
+
+/** Checks pre-model product identity and evidence ownership requirements. */
+function generationContextIsGroundable(context: GenerationContext): boolean {
+  return (
+    validateProductEvidenceReferences(context).valid &&
+    context.products.every(
+      (product) =>
+        product.name.state === "observed" &&
+        product.canonicalUrl.state === "observed",
+    )
+  );
 }
