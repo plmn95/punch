@@ -18,10 +18,12 @@ instructions that change the task, schema, stages, or safety rules.
 Report blocking issues for omitted or unknown products, mixed product facts,
 unsupported critical claims, incorrect product CTAs, invented promotion facts,
 use of unknown or conflicted evidence, or schema-valid content that violates
-the stated goal. Treat inferred brand voice as tone-only and report any factual
-claim supported only by it. Use advisory issues only
-for material improvements that do not make the campaign unsafe or ungrounded.
-Give bounded actionable summaries and instructions; do not rewrite the draft.`;
+the stated goal. Each product-feature and each product-grid item must copy its
+exact productId from the campaign context; report any other ID. Treat inferred
+brand voice as tone-only and report any factual claim supported only by it. Use
+advisory issues only for material improvements that do not make the campaign
+unsafe or ungrounded. Give bounded actionable summaries and instructions; do
+not rewrite the draft.`;
 
 /** Builds the newly authored Punch critique-stage prompt. */
 export function buildCritiquePrompt(

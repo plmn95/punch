@@ -1,5 +1,6 @@
 import {
   CampaignSchema,
+  productIdFromIndex,
   type Campaign,
   type CampaignBlock,
   type ProductPresentation,
@@ -43,7 +44,7 @@ export function createGridProducts(count: number): ProductPresentation[] {
     const sequence = String(index + 1).padStart(2, "0");
     return {
       ...template,
-      productId: `grid-product-${sequence}`,
+      productId: productIdFromIndex(index),
       name: `Grid product ${sequence}`,
       image: {
         alt: `Grid product ${sequence}`,

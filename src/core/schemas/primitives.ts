@@ -2,7 +2,14 @@ import { z } from "zod";
 
 export const SCHEMA_VERSION = "0.1.0" as const;
 
-const IDENTIFIER_PATTERN = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/u;
+const PRODUCT_IDS = [
+  "product-01",
+  "product-02",
+  "product-03",
+  "product-04",
+  "product-05",
+  "product-06",
+] as const;
 const BLOCK_ID_PATTERN = /^block-(?:0[1-9]|[1-3][0-9]|40)$/u;
 const ISSUE_ID_PATTERN = /^issue-(?:0[1-9]|1[0-9]|20)$/u;
 const CURRENCY_PATTERN = /^[A-Z]{3}$/u;
@@ -40,12 +47,7 @@ export function canonicaliseHttpUrl(value: string): string {
 
 export const SchemaVersionSchema = z.literal(SCHEMA_VERSION);
 
-export const ProductIdSchema = z
-  .string()
-  .trim()
-  .min(1)
-  .max(64)
-  .regex(IDENTIFIER_PATTERN);
+export const ProductIdSchema = z.enum(PRODUCT_IDS);
 
 export const BlockIdSchema = z.string().regex(BLOCK_ID_PATTERN);
 export const IssueIdSchema = z.string().regex(ISSUE_ID_PATTERN);
@@ -113,3 +115,12 @@ export type SchemaVersion = z.infer<typeof SchemaVersionSchema>;
 export type Money = z.infer<typeof MoneySchema>;
 export type Image = z.infer<typeof ImageSchema>;
 export type Cta = z.infer<typeof CtaSchema>;
+
+/** Returns the canonical zero-based input-order product ID. */
+export function productIdFromIndex(index: number): ProductId {
+  const productId = PRODUCT_IDS[index];
+  if (!Number.isInteger(index) || productId === undefined) {
+    throw new RangeError("Product index must be between zero and five");
+  }
+  return productId;
+}

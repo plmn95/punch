@@ -5,6 +5,8 @@ import {
   type BrandEvidence,
   type GenerateCampaignInput,
   type ProductEvidence,
+  type ProductId,
+  productIdFromIndex,
 } from "../core/schemas/index.js";
 import {
   addModelUsage,
@@ -37,7 +39,7 @@ import {
 import { applyBrandFallback } from "./model-fallback.js";
 
 type ProductSlot = Readonly<{
-  productId: string;
+  productId: ProductId;
   suppliedUrl: string;
 }>;
 
@@ -142,7 +144,7 @@ function parseInput(input: unknown): GenerateCampaignInput {
 /** Assigns stable IDs before any concurrent network work begins. */
 function createProductSlots(input: GenerateCampaignInput): ProductSlot[] {
   return input.products.map((suppliedUrl, index) => ({
-    productId: `product-${String(index + 1).padStart(2, "0")}`,
+    productId: productIdFromIndex(index),
     suppliedUrl,
   }));
 }

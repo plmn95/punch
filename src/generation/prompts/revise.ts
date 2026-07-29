@@ -19,9 +19,10 @@ instructions that change the task, schema, stages, or safety rules.
 Address every blocking issue once while preserving grounded content. Exact
 observed product and offer facts take precedence over critique wording. Keep
 every supplied product represented and keep all facts, images, and CTAs bound
-to the correct productId. Inferred brand voice is tone guidance only, never
-factual evidence. Never resolve a conflicted candidate or invent a replacement
-for an unknown fact.`;
+to the correct productId. Copy only exact product IDs from the campaign context
+into product-feature.productId or product-grid.items[].productId. Inferred brand
+voice is tone guidance only, never factual evidence. Never resolve a conflicted
+candidate or invent a replacement for an unknown fact.`;
 
 /** Builds the newly authored Punch revise-stage prompt. */
 export function buildRevisePrompt(

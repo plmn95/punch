@@ -6,13 +6,14 @@ import type {
   GenerationContext,
   RevisionOutputPayload,
 } from "../core/schemas/index.js";
+import { collectProductBlockBindings } from "../core/product-bindings.js";
 
 /** Reports caller-owned goal and structured-offer invariant failures. */
 export function campaignStageIssues(
   campaign: CampaignDraftPayload,
   context: GenerationContext,
 ): string[] {
-  const issues: string[] = [];
+  const issues = productBindingIssues(campaign, context);
   if (campaign.goal !== context.goal) {
     issues.push("goal-mismatch");
   }
@@ -26,6 +27,21 @@ export function campaignStageIssues(
     }
   }
   return [...new Set(issues)];
+}
+
+/** Rejects product-bearing blocks that reference no current input product. */
+function productBindingIssues(
+  campaign: CampaignDraftPayload,
+  context: GenerationContext,
+): string[] {
+  const knownIds = new Set(
+    context.products.map((product) => product.productId),
+  );
+  return collectProductBlockBindings(campaign).some(
+    (binding) => !knownIds.has(binding.productId),
+  )
+    ? ["unknown-product-id"]
+    : [];
 }
 
 /** Reports discount-code facts that do not match the structured offer. */

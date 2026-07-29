@@ -1,6 +1,6 @@
 # Phase 2 checkpoint 5
 
-Status: local review candidate. This checkpoint connects independently written
+Status: approved checkpoint. This checkpoint connects independently written
 brand and product extraction to the existing semantic generation engine.
 
 ## Authority and boundary
@@ -9,6 +9,8 @@ brand and product extraction to the existing semantic generation engine.
   `205236ec9ad0b1c196c222ed19ac46e560d0f831`.
 - Plamen approved checkpoint 4 and its exact visual evidence, then authorised
   continuation into checkpoint 5 on 29 July 2026.
+- Plamen approved the exact checkpoint-5 commit
+  `f6976d1b0081626f18e6e18a4c932a3420c2919c` on 29 July 2026.
 - The implementation was written from Punch's public contracts and newly
   fictional tests.
 - No private Punchline source, prompt, fixture, snapshot, asset, campaign, or
@@ -249,8 +251,8 @@ surfaces are outside this checkpoint.
 ## Limits and next gate
 
 `SEC-2` closes on the hardened-fetch implementation, adversarial matrix, and
-independent security review. `P2-C5` remains open until Plamen approves the
-exact local commit.
+independent security review. Plamen's approval of exact commit
+`f6976d1b0081626f18e6e18a4c932a3420c2919c` closes `P2-C5`.
 
 The strongest remaining factual gate is `SEC-4`: checkpoints 6 and 7 must
 prove required single- and six-product coverage and exact name, fact, image,

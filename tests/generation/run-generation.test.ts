@@ -42,8 +42,8 @@ describe("generation orchestration", () => {
       ]);
       expect(run.usage.calls).toHaveLength(2);
       expect(run.promptVersions).toEqual({
-        emit: "punch.emit.v2",
-        critique: "punch.critique.v2",
+        emit: "punch.emit.v3",
+        critique: "punch.critique.v3",
       });
     },
   );
@@ -180,7 +180,7 @@ describe("generation orchestration", () => {
     const model = new QueuedTextModel([
       jsonResponse(createCampaignPayload()),
       jsonResponse({
-        issues: [{ ...issue, productId: "product-99" }],
+        issues: [{ ...issue, productId: "product-03" }],
       }),
       jsonResponse(createCritiquePayload()),
     ]);

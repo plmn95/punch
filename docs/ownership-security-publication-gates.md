@@ -29,7 +29,8 @@ gate.
 | P2-C2  | Phase 2 checkpoint 2 review                            | Closed   | Plamen                                 | Plamen approved commit `20c83ca4f300eda4a1d82751a206c8ed46704a39` on 29 July 2026                                                                                                         |
 | P2-C3  | Phase 2 checkpoint 3 review                            | Closed   | Plamen                                 | Plamen approved commit `ce0e9305181579d599a64a2171bc9c7a0a54e638` on 29 July 2026                                                                                                         |
 | P2-C4  | Phase 2 checkpoint 4 review                            | Closed   | Plamen                                 | Plamen approved commit `205236ec9ad0b1c196c222ed19ac46e560d0f831` and its eight exact rendered states on 29 July 2026                                                                     |
-| P2-C5  | Phase 2 checkpoint 5 review                            | Open     | Plamen                                 | Exact local extraction commit, hardened-fetch/security evidence, deterministic parser and model-fallback proof, input-to-generation integration, package review, and Plamen approval      |
+| P2-C5  | Phase 2 checkpoint 5 review                            | Closed   | Plamen                                 | Plamen approved commit `f6976d1b0081626f18e6e18a4c932a3420c2919c` on 29 July 2026                                                                                                         |
+| P2-C6  | Phase 2 checkpoint 6 review                            | Open     | Plamen                                 | Exact local identity commit, canonical input-order product-ID proof, product-block referential integrity, single/six-product render-marker proof, and Plamen approval                     |
 | OWN-1  | Copyright ownership/assignment for code candidates     | Open     | Plamen or designated rights reviewer   | Written evidence covering every copied/adapted source surface, including employee/contractor assignment and intentional open-source redistribution                                        |
 | IP-1   | Prompt and model-material rights                       | Open     | Plamen or designated rights reviewer   | Per-prompt authorship, assignment, public-release decision, content review, source hash, destination, and transfer/rewrite disposition                                                    |
 | NAME-1 | Punch name, package name, and marks                    | Open     | Plamen                                 | Search and decision for repository, package registry, binary name, domain/mark conflicts, and required attribution                                                                        |
@@ -76,8 +77,16 @@ commit and all eight rendered states on 29 July 2026, closing `P2-C4` and
 Checkpoint 5 independently adds hardened fetching, deterministic source
 extraction, bounded brand-tone classification, and an internal
 extraction-to-generation connection. Its adversarial matrix and independent
-security review close `SEC-2`. `P2-C5`, `SEC-3`, `SEC-4`, `SEC-6`, `DEP-1`,
-`PKG-1`, and the broader release gates remain open, deferred, or held.
+security review close `SEC-2`. Plamen approved its exact commit, closing
+`P2-C5`.
+
+Checkpoint 6 makes IDs canonical in input order, carries explicit identity
+through the two approved product-bearing structures, rejects references to no
+current context product during emit and revision, and proves identity markers
+survive single- and six-product rendering. It does not compare generated
+product facts with evidence or require complete product coverage. `P2-C6`,
+`SEC-3`, `SEC-4`, `SEC-6`, `DEP-1`, `PKG-1`, and the broader release gates
+remain open, deferred, or held.
 
 ## Ownership extraction ledger
 
@@ -282,6 +291,6 @@ No step may be skipped:
 10. Verify remote visibility, reachable objects, default branch, release
     contents, package contents, and published checks.
 
-Step 1 and Phase 2 checkpoints 1–4 are complete. Checkpoint 5 has entered local
+Step 1 and Phase 2 checkpoints 1–5 are complete. Checkpoint 6 has entered local
 review; no later checkpoint or steps 2–10 are authorised or complete. The
 absence of a remote is an intentional safety condition, not missing work.

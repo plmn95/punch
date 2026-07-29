@@ -3,10 +3,12 @@ import type {
   CampaignDraftPayload,
   CritiqueOutputPayload,
   GenerationContext,
+  ProductId,
   ProductEvidence,
   ProductPresentation,
   RevisionOutputPayload,
 } from "../src/core/schemas/index.js";
+import { productIdFromIndex } from "../src/core/schemas/index.js";
 
 const WEBSITE_URL = "https://kiln-and-leaf.example.com/";
 
@@ -20,7 +22,7 @@ function websiteEvidence(field: string) {
 }
 
 /** Creates one fictional observed product evidence reference. */
-function productEvidence(productId: string, url: string, field: string) {
+function productEvidence(productId: ProductId, url: string, field: string) {
   return {
     source: "product" as const,
     productId,
@@ -31,7 +33,7 @@ function productEvidence(productId: string, url: string, field: string) {
 
 /** Creates a newly authored fictional product evidence profile. */
 export function createProductEvidence(index: number): ProductEvidence {
-  const productId = `product-${String(index).padStart(2, "0")}`;
+  const productId = productIdFromIndex(index - 1);
   const slug = index === 1 ? "ember-mug" : `meadow-cup-${index}`;
   const suppliedUrl = `${WEBSITE_URL}products/${slug}`;
   const evidence = (field: string) =>

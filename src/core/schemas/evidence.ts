@@ -9,6 +9,7 @@ import {
   ProductIdSchema,
   SchemaVersionSchema,
   ShortTextSchema,
+  productIdFromIndex,
 } from "./primitives.js";
 
 const EvidenceFieldSchema = z
@@ -231,6 +232,16 @@ export const GenerationContextSchema = generationContextUnion.superRefine(
         path: ["products"],
       });
     }
+
+    generationContext.products.forEach((product, index) => {
+      if (product.productId !== productIdFromIndex(index)) {
+        context.addIssue({
+          code: "custom",
+          message: "Product evidence IDs must follow input order",
+          path: ["products", index, "productId"],
+        });
+      }
+    });
 
     if (new Set(suppliedUrls).size !== suppliedUrls.length) {
       context.addIssue({

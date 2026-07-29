@@ -1,6 +1,7 @@
 import type {
   BrandEvidence,
   GenerationContext,
+  ProductId,
   ProductEvidence,
 } from "../core/schemas/index.js";
 import type { ModelUsage, TextModel } from "../providers/index.js";
@@ -40,7 +41,7 @@ export type HtmlSource = Readonly<{
 
 export type ProductSource = HtmlSource &
   Readonly<{
-    productId: string;
+    productId: ProductId;
     suppliedUrl: string;
   }>;
 
