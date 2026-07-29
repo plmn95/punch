@@ -1,0 +1,299 @@
+{
+  "schemaVersion": "0.1.0",
+  "brand": {
+    "websiteUrl": "https://kiln-and-leaf.example.com/",
+    "name": {
+      "state": "observed",
+      "value": "Kiln & Leaf",
+      "evidence": [
+        {
+          "source": "website",
+          "url": "https://kiln-and-leaf.example.com/",
+          "field": "name"
+        }
+      ]
+    },
+    "logoUrl": {
+      "state": "unknown"
+    },
+    "colours": {
+      "state": "inferred",
+      "value": ["#B85C3F", "#F4EBDD", "#354338"],
+      "evidence": [
+        {
+          "source": "website",
+          "url": "https://kiln-and-leaf.example.com/",
+          "field": "styles.colours"
+        }
+      ],
+      "rationale": "The fictional source repeatedly uses these three colours."
+    },
+    "fonts": {
+      "state": "unknown"
+    },
+    "voice": {
+      "state": "inferred",
+      "value": {
+        "summary": "Warm, direct, and grounded in unhurried everyday rituals.",
+        "traits": ["warm", "plain-spoken", "calm"]
+      },
+      "evidence": [
+        {
+          "source": "website",
+          "url": "https://kiln-and-leaf.example.com/",
+          "field": "copy.voice"
+        }
+      ],
+      "rationale": "The fictional source uses short, welcoming sentences about daily use."
+    }
+  },
+  "products": [
+    {
+      "productId": "product-01",
+      "suppliedUrl": "https://kiln-and-leaf.example.com/products/ember-mug",
+      "canonicalUrl": {
+        "state": "observed",
+        "value": "https://kiln-and-leaf.example.com/products/ember-mug",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-01",
+            "url": "https://kiln-and-leaf.example.com/products/ember-mug",
+            "field": "canonical-url"
+          }
+        ]
+      },
+      "name": {
+        "state": "observed",
+        "value": "Ember Mug",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-01",
+            "url": "https://kiln-and-leaf.example.com/products/ember-mug",
+            "field": "name"
+          }
+        ]
+      },
+      "price": {
+        "state": "observed",
+        "value": {
+          "amount": "28.00",
+          "currency": "EUR",
+          "display": "€28"
+        },
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-01",
+            "url": "https://kiln-and-leaf.example.com/products/ember-mug",
+            "field": "price"
+          }
+        ]
+      },
+      "availability": {
+        "state": "observed",
+        "value": "in-stock",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-01",
+            "url": "https://kiln-and-leaf.example.com/products/ember-mug",
+            "field": "availability"
+          }
+        ]
+      },
+      "imageUrl": {
+        "state": "observed",
+        "value": "https://kiln-and-leaf.example.com/images/products/ember-mug.jpg",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-01",
+            "url": "https://kiln-and-leaf.example.com/products/ember-mug",
+            "field": "image-url"
+          }
+        ]
+      },
+      "description": {
+        "state": "observed",
+        "value": "A wide stoneware mug with a rounded handle and warm speckled glaze.",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-01",
+            "url": "https://kiln-and-leaf.example.com/products/ember-mug",
+            "field": "description"
+          }
+        ]
+      }
+    },
+    {
+      "productId": "product-02",
+      "suppliedUrl": "https://kiln-and-leaf.example.com/products/meadow-cup",
+      "canonicalUrl": {
+        "state": "observed",
+        "value": "https://kiln-and-leaf.example.com/products/meadow-cup",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-02",
+            "url": "https://kiln-and-leaf.example.com/products/meadow-cup",
+            "field": "canonical-url"
+          }
+        ]
+      },
+      "name": {
+        "state": "observed",
+        "value": "Meadow Cup",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-02",
+            "url": "https://kiln-and-leaf.example.com/products/meadow-cup",
+            "field": "name"
+          }
+        ]
+      },
+      "price": {
+        "state": "observed",
+        "value": {
+          "amount": "24.00",
+          "currency": "EUR",
+          "display": "€24"
+        },
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-02",
+            "url": "https://kiln-and-leaf.example.com/products/meadow-cup",
+            "field": "price"
+          }
+        ]
+      },
+      "availability": {
+        "state": "observed",
+        "value": "in-stock",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-02",
+            "url": "https://kiln-and-leaf.example.com/products/meadow-cup",
+            "field": "availability"
+          }
+        ]
+      },
+      "imageUrl": {
+        "state": "observed",
+        "value": "https://kiln-and-leaf.example.com/images/products/meadow-cup.jpg",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-02",
+            "url": "https://kiln-and-leaf.example.com/products/meadow-cup",
+            "field": "image-url"
+          }
+        ]
+      },
+      "description": {
+        "state": "observed",
+        "value": "A compact stoneware cup with a softly tapered shape and meadow-green glaze.",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-02",
+            "url": "https://kiln-and-leaf.example.com/products/meadow-cup",
+            "field": "description"
+          }
+        ]
+      }
+    },
+    {
+      "productId": "product-03",
+      "suppliedUrl": "https://kiln-and-leaf.example.com/products/hearth-pitcher",
+      "canonicalUrl": {
+        "state": "observed",
+        "value": "https://kiln-and-leaf.example.com/products/hearth-pitcher",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-03",
+            "url": "https://kiln-and-leaf.example.com/products/hearth-pitcher",
+            "field": "canonical-url"
+          }
+        ]
+      },
+      "name": {
+        "state": "observed",
+        "value": "Hearth Pitcher",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-03",
+            "url": "https://kiln-and-leaf.example.com/products/hearth-pitcher",
+            "field": "name"
+          }
+        ]
+      },
+      "price": {
+        "state": "observed",
+        "value": {
+          "amount": "52.00",
+          "currency": "EUR",
+          "display": "€52"
+        },
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-03",
+            "url": "https://kiln-and-leaf.example.com/products/hearth-pitcher",
+            "field": "price"
+          }
+        ]
+      },
+      "availability": {
+        "state": "observed",
+        "value": "in-stock",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-03",
+            "url": "https://kiln-and-leaf.example.com/products/hearth-pitcher",
+            "field": "availability"
+          }
+        ]
+      },
+      "imageUrl": {
+        "state": "observed",
+        "value": "https://kiln-and-leaf.example.com/images/products/hearth-pitcher.jpg",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-03",
+            "url": "https://kiln-and-leaf.example.com/products/hearth-pitcher",
+            "field": "image-url"
+          }
+        ]
+      },
+      "description": {
+        "state": "observed",
+        "value": "A tall stoneware pitcher with a broad handle and a pour-friendly lip.",
+        "evidence": [
+          {
+            "source": "product",
+            "productId": "product-03",
+            "url": "https://kiln-and-leaf.example.com/products/hearth-pitcher",
+            "field": "description"
+          }
+        ]
+      }
+    }
+  ],
+  "instructions": "Feature the Ember Mug first, then present the Meadow Cup and Hearth Pitcher as supporting pieces.",
+  "goal": "promotion",
+  "offer": {
+    "description": "Save 15% on the selected table pieces.",
+    "code": "TABLE15",
+    "endsAt": "2027-02-14T23:59:00+02:00"
+  }
+}

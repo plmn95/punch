@@ -1,0 +1,116 @@
+{
+  "schemaVersion": "0.1.0",
+  "goal": "promotion",
+  "subject": "Save 15% on pieces for slower mornings",
+  "preheader": "Meet three Kiln & Leaf pieces and save 15% with TABLE15.",
+  "blocks": [
+    {
+      "type": "header-standard",
+      "brandName": "Kiln & Leaf",
+      "homeUrl": "https://kiln-and-leaf.example.com/",
+      "id": "block-01"
+    },
+    {
+      "type": "hero-stacked",
+      "eyebrow": "A considered table collection",
+      "heading": "Make room for slower mornings",
+      "body": "Three warm stoneware pieces, brought together with one simple offer.",
+      "id": "block-02"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Start with the Ember Mug",
+      "id": "block-03"
+    },
+    {
+      "type": "body-paragraph",
+      "markdown": "Lead with the Ember Mug, then add the Meadow Cup and Hearth Pitcher to complete the table.",
+      "id": "block-04"
+    },
+    {
+      "type": "product-feature",
+      "eyebrow": "Featured piece",
+      "productId": "product-01",
+      "name": "Ember Mug",
+      "description": "A wide stoneware mug with a rounded handle and warm speckled glaze.",
+      "price": {
+        "amount": "28.00",
+        "currency": "EUR",
+        "display": "€28"
+      },
+      "image": {
+        "url": "https://kiln-and-leaf.example.com/images/products/ember-mug.jpg",
+        "alt": "Ember Mug in warm speckled stoneware"
+      },
+      "cta": {
+        "label": "View Ember Mug",
+        "href": "https://kiln-and-leaf.example.com/products/ember-mug"
+      },
+      "id": "block-05"
+    },
+    {
+      "type": "product-grid",
+      "columns": 2,
+      "items": [
+        {
+          "productId": "product-02",
+          "name": "Meadow Cup",
+          "description": "A compact stoneware cup with a softly tapered shape and meadow-green glaze.",
+          "price": {
+            "amount": "24.00",
+            "currency": "EUR",
+            "display": "€24"
+          },
+          "image": {
+            "url": "https://kiln-and-leaf.example.com/images/products/meadow-cup.jpg",
+            "alt": "Meadow Cup with meadow-green glaze"
+          },
+          "cta": {
+            "label": "View Meadow Cup",
+            "href": "https://kiln-and-leaf.example.com/products/meadow-cup"
+          }
+        },
+        {
+          "productId": "product-03",
+          "name": "Hearth Pitcher",
+          "description": "A tall stoneware pitcher with a broad handle and a pour-friendly lip.",
+          "price": {
+            "amount": "52.00",
+            "currency": "EUR",
+            "display": "€52"
+          },
+          "image": {
+            "url": "https://kiln-and-leaf.example.com/images/products/hearth-pitcher.jpg",
+            "alt": "Hearth Pitcher with a broad handle"
+          },
+          "cta": {
+            "label": "View Hearth Pitcher",
+            "href": "https://kiln-and-leaf.example.com/products/hearth-pitcher"
+          }
+        }
+      ],
+      "id": "block-06"
+    },
+    {
+      "type": "discount-code",
+      "heading": "Save 15% on all three pieces",
+      "description": "Save 15% on the selected table pieces.",
+      "code": "TABLE15",
+      "endsAt": "2027-02-14T23:59:00+02:00",
+      "id": "block-07"
+    },
+    {
+      "type": "cta-block",
+      "heading": "Bring Kiln & Leaf to the table",
+      "body": "Choose a favourite or collect all three pieces.",
+      "actions": [
+        {
+          "label": "Visit Kiln & Leaf",
+          "href": "https://kiln-and-leaf.example.com/"
+        }
+      ],
+      "id": "block-08"
+    }
+  ]
+}
