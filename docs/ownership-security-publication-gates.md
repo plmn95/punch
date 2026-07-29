@@ -26,7 +26,8 @@ gate.
 | SRC-1  | Private source pin and closed allowlist, planning only | Closed   | Plamen                                 | Source commit `1853897ce1325de262cc3b5b9a430abe0452d8ad`; exact file/function hashes in the allowlist; no transfer authority                                                              |
 | P1-REV | Phase 1 documentation baseline review                  | Closed   | Plamen                                 | Plamen approved commit `a299cdf11abaec0c93ccec19e894f320f5ee74fe` on 29 July 2026                                                                                                         |
 | P2-C1  | Phase 2 checkpoint 1 review                            | Closed   | Plamen                                 | Plamen approved commit `7225f2b3ab6adac669f842558912167c854ec876` on 29 July 2026                                                                                                         |
-| P2-C2  | Phase 2 checkpoint 2 review                            | Open     | Plamen                                 | Exact local checkpoint commit, fixed-fixture provenance, focused engine proof, complete checks, and Plamen approval                                                                       |
+| P2-C2  | Phase 2 checkpoint 2 review                            | Closed   | Plamen                                 | Plamen approved commit `20c83ca4f300eda4a1d82751a206c8ed46704a39` on 29 July 2026                                                                                                         |
+| P2-C3  | Phase 2 checkpoint 3 review                            | Open     | Plamen                                 | Exact local renderer checkpoint commit, clean-room provenance, focused structural proof, dependency/package evidence, complete checks, and Plamen approval                                |
 | OWN-1  | Copyright ownership/assignment for code candidates     | Open     | Plamen or designated rights reviewer   | Written evidence covering every copied/adapted source surface, including employee/contractor assignment and intentional open-source redistribution                                        |
 | IP-1   | Prompt and model-material rights                       | Open     | Plamen or designated rights reviewer   | Per-prompt authorship, assignment, public-release decision, content review, source hash, destination, and transfer/rewrite disposition                                                    |
 | NAME-1 | Punch name, package name, and marks                    | Open     | Plamen                                 | Search and decision for repository, package registry, binary name, domain/mark conflicts, and required attribution                                                                        |
@@ -58,6 +59,10 @@ fixed fictional fixture. `FIX-1` remains Open because the later six-case
 fictional evaluation set does not yet exist. The fixture-specific association
 proof does not close `SEC-4`, and one deterministic campaign does not close
 `QA-1` or `VIS-1`.
+
+Checkpoint 3 independently implements the export-only renderer without a
+private-source transfer. Its fixture-specific structural proof and dependency
+inventory do not close `DEP-1`, `PKG-1`, `SEC-4`, `QA-1`, or `VIS-1`.
 
 ## Ownership extraction ledger
 
@@ -262,6 +267,6 @@ No step may be skipped:
 10. Verify remote visibility, reachable objects, default branch, release
     contents, package contents, and published checks.
 
-Step 1 and Phase 2 checkpoint 1 are complete. Checkpoint 2 has entered local
+Step 1 and Phase 2 checkpoints 1–2 are complete. Checkpoint 3 has entered local
 review; later checkpoints and steps 2–10 are not complete. The absence of a
 remote is an intentional safety condition, not missing work.
