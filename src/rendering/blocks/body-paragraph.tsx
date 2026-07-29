@@ -1,6 +1,6 @@
 import type { BodyParagraphBlock } from "../../core/schemas/index.js";
 import { renderSafeInlineMarkdown } from "../safe-inline-markdown.js";
-import { bodyTextStyle, sectionCellStyle } from "../styles.js";
+import { bodySectionCellStyle, bodyTextStyle } from "../styles.js";
 import { BlockFrame } from "./shared.js";
 
 type BodyParagraphProps = {
@@ -13,9 +13,11 @@ export function BodyParagraph({ block }: BodyParagraphProps) {
     <BlockFrame
       blockId={block.id}
       blockType={block.type}
-      cellStyle={sectionCellStyle}
+      cellStyle={bodySectionCellStyle}
     >
-      <p style={bodyTextStyle}>{renderSafeInlineMarkdown(block.markdown)}</p>
+      <p data-punch-text-role="body-canvas" style={bodyTextStyle}>
+        {renderSafeInlineMarkdown(block.markdown)}
+      </p>
     </BlockFrame>
   );
 }

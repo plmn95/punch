@@ -1,0 +1,42 @@
+export const EMAIL_THEME = {
+  colours: {
+    accent: "#9a5137",
+    body: "#5f5047",
+    border: "#e4d7ca",
+    buttonText: "#ffffff",
+    canvas: "#fffdf9",
+    card: "#f8f3ed",
+    code: "#fffdf9",
+    compliance: "#74675e",
+    page: "#f4efe8",
+    primary: "#2f251f",
+    promotion: "#efe0d2",
+    promotionBorder: "#d9bba3",
+  },
+  fonts: {
+    body: 'Arial, "Helvetica Neue", Helvetica, sans-serif',
+    display: 'Georgia, "Times New Roman", serif',
+  },
+  geometry: {
+    ctaHeight: 48,
+    ctaLineHeight: 20,
+    ctaVerticalPadding: 14,
+    productCopyHeight: {
+      2: 154,
+      3: 198,
+      4: 246,
+    },
+  },
+  typography: {
+    body: 16,
+    button: 15,
+    compliance: 12,
+    discountCode: 20,
+    eyebrow: 14,
+    heading: 28,
+    hero: 38,
+    product: 22,
+    subheading: 22,
+    wordmark: 26,
+  },
+} as const;

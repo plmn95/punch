@@ -2,12 +2,13 @@ import type {
   ProductGridBlock,
   ProductPresentation,
 } from "../../core/schemas/index.js";
-import { EMAIL_WIDTH } from "../render-contract.js";
-import { sectionCellStyle } from "../styles.js";
+import {
+  gridCellWidth,
+  gridImageWidth,
+  gridRowWidth,
+} from "../render-contract.js";
+import { productSectionCellStyle } from "../styles.js";
 import { BlockFrame, ProductCard } from "./shared.js";
-
-const GRID_HORIZONTAL_PADDING = 80;
-const CARD_HORIZONTAL_PADDING = 20;
 
 type ProductGridProps = {
   readonly block: ProductGridBlock;
@@ -27,26 +28,19 @@ function createRows(
   return rows;
 }
 
-/** Formats an email-table percentage without unstable trailing precision. */
-function percentage(value: number): string {
-  return `${Number(value.toFixed(4))}%`;
-}
-
 /** Renders a centred row whose effective product width follows the grid columns. */
 function ProductRow({
   columns,
   items,
   rowIndex,
 }: {
-  readonly columns: number;
+  readonly columns: 2 | 3 | 4;
   readonly items: readonly ProductPresentation[];
   readonly rowIndex: number;
 }) {
-  const rowWidth = percentage((items.length / columns) * 100);
-  const cellWidth = percentage(100 / items.length);
-  const imageWidth = Math.floor(
-    (EMAIL_WIDTH - GRID_HORIZONTAL_PADDING) / columns - CARD_HORIZONTAL_PADDING,
-  );
+  const rowWidth = gridRowWidth(items.length, columns);
+  const cellWidth = gridCellWidth(items.length);
+  const imageWidth = gridImageWidth(columns);
 
   return (
     <tr data-punch-grid-row={rowIndex + 1}>
@@ -68,10 +62,14 @@ function ProductRow({
                   className="punch-mobile-column"
                   data-punch-grid-column={product.productId}
                   key={product.productId}
-                  style={{ padding: "10px", verticalAlign: "top" }}
+                  style={{ padding: "8px", verticalAlign: "top" }}
                   width={cellWidth}
                 >
-                  <ProductCard imageWidth={imageWidth} product={product} />
+                  <ProductCard
+                    columns={columns}
+                    imageWidth={imageWidth}
+                    product={product}
+                  />
                 </td>
               ))}
             </tr>
@@ -90,7 +88,7 @@ export function ProductGrid({ block }: ProductGridProps) {
     <BlockFrame
       blockId={block.id}
       blockType={block.type}
-      cellStyle={sectionCellStyle}
+      cellStyle={productSectionCellStyle}
     >
       <table
         border={0}

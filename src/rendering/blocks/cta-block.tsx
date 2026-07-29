@@ -1,6 +1,6 @@
 import type { CtaBlock } from "../../core/schemas/index.js";
 import {
-  bodyTextStyle,
+  bodyTextWithTopMarginStyle,
   centeredSectionCellStyle,
   headingTwoStyle,
 } from "../styles.js";
@@ -21,10 +21,17 @@ export function ClosingCta({ block }: CtaBlockProps) {
       cellStyle={centeredSectionCellStyle}
     >
       {block.heading === undefined ? null : (
-        <h2 style={headingTwoStyle}>{block.heading}</h2>
+        <h2 data-punch-text-role="heading" style={headingTwoStyle}>
+          {block.heading}
+        </h2>
       )}
       {block.body === undefined ? null : (
-        <p style={bodyTextStyle}>{block.body}</p>
+        <p
+          data-punch-text-role="body-canvas"
+          style={bodyTextWithTopMarginStyle}
+        >
+          {block.body}
+        </p>
       )}
       <table
         border={0}

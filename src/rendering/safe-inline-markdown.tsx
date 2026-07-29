@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 
 import { HttpUrlSchema } from "../core/schemas/primitives.js";
+import { inlineLinkStyle } from "./styles.js";
 
 const TOKEN_PATTERN =
   /((?<![\\*])\*\*[^*\n]+\*\*(?!\*)|(?<![\\*])\*[^*\n]+\*(?!\*)|(?<![!\\])\[[^\]\n]+\]\([^() \n]+\)(?!\)))/gu;
@@ -28,7 +29,12 @@ function renderToken(token: string, key: number): ReactNode {
   }
 
   return (
-    <a key={key} href={parsedUrl.data}>
+    <a
+      data-punch-text-role="inline-link"
+      href={parsedUrl.data}
+      key={key}
+      style={inlineLinkStyle}
+    >
       {label}
     </a>
   );

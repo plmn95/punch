@@ -19,12 +19,19 @@ export function HeaderStandard({ block }: HeaderStandardProps) {
       blockType={block.type}
       cellStyle={compactSectionCellStyle}
     >
-      <a href={renderHttpUrl(block.homeUrl)} style={wordmarkStyle}>
+      <a
+        data-punch-text-role={
+          block.logo === undefined ? "wordmark" : "image-link"
+        }
+        href={renderHttpUrl(block.homeUrl)}
+        style={wordmarkStyle}
+      >
         {block.logo === undefined ? (
           block.brandName
         ) : (
           <img
             alt={block.logo.alt}
+            data-punch-image-role="logo"
             src={renderHttpUrl(block.logo.url)}
             style={imageStyle}
             width={160}

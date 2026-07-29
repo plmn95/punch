@@ -1,19 +1,46 @@
 import type { CSSProperties } from "react";
 
+import { EMAIL_THEME } from "./render-theme.js";
+
 export const RESPONSIVE_CSS = `
+body, table, td, a {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
 @media only screen and (max-width: 600px) {
+  .punch-shell-cell {
+    padding: 0 !important;
+  }
+
+  .punch-email-container {
+    border-radius: 0 !important;
+  }
+
   .punch-mobile-row {
     width: 100% !important;
   }
 
   .punch-mobile-column {
+    box-sizing: border-box !important;
     display: block !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     width: 100% !important;
   }
 
   .punch-section-cell {
     padding-left: 20px !important;
     padding-right: 20px !important;
+  }
+
+  .punch-hero-heading {
+    font-size: 32px !important;
+    line-height: 38px !important;
+  }
+
+  .punch-product-copy {
+    height: auto !important;
   }
 
   .punch-mobile-button {
@@ -24,23 +51,33 @@ export const RESPONSIVE_CSS = `
 `;
 
 export const pageStyle = {
-  backgroundColor: "#f4efe8",
-  color: "#2f251f",
-  fontFamily: 'Arial, "Helvetica Neue", Helvetica, sans-serif',
+  WebkitTextSizeAdjust: "100%",
+  backgroundColor: EMAIL_THEME.colours.page,
+  color: EMAIL_THEME.colours.primary,
+  fontFamily: EMAIL_THEME.fonts.body,
   margin: "0",
   padding: "0",
+  textSizeAdjust: "100%",
 } satisfies CSSProperties;
 
 export const outerTableStyle = {
-  backgroundColor: "#f4efe8",
+  backgroundColor: EMAIL_THEME.colours.page,
   borderCollapse: "collapse",
   width: "100%",
 } satisfies CSSProperties;
 
+export const shellCellStyle = {
+  padding: "32px 16px",
+} satisfies CSSProperties;
+
 export const containerStyle = {
-  backgroundColor: "#fffdf9",
-  borderCollapse: "collapse",
+  backgroundColor: EMAIL_THEME.colours.canvas,
+  border: `1px solid ${EMAIL_THEME.colours.border}`,
+  borderCollapse: "separate",
+  borderRadius: "14px",
+  boxShadow: "0 12px 32px rgba(47, 37, 31, 0.08)",
   maxWidth: "600px",
+  overflow: "hidden",
   width: "100%",
 } satisfies CSSProperties;
 
@@ -50,6 +87,7 @@ export const preheaderStyle = {
   fontSize: "1px",
   lineHeight: "1px",
   maxHeight: "0",
+  maxWidth: "0",
   opacity: 0,
   overflow: "hidden",
 } satisfies CSSProperties;
@@ -59,18 +97,37 @@ export const sectionCellStyle = {
 } satisfies CSSProperties;
 
 export const compactSectionCellStyle = {
-  padding: "16px 40px",
-} satisfies CSSProperties;
-
-export const centeredSectionCellStyle = {
-  padding: "32px 40px",
+  padding: "24px 40px",
   textAlign: "center",
 } satisfies CSSProperties;
 
+export const centeredSectionCellStyle = {
+  padding: "36px 40px 40px",
+  textAlign: "center",
+} satisfies CSSProperties;
+
+export const heroSectionCellStyle = {
+  backgroundColor: EMAIL_THEME.colours.card,
+  padding: "44px 40px",
+  textAlign: "center",
+} satisfies CSSProperties;
+
+export const headingSectionCellStyle = {
+  padding: "32px 40px 8px",
+} satisfies CSSProperties;
+
+export const bodySectionCellStyle = {
+  padding: "0 40px 24px",
+} satisfies CSSProperties;
+
+export const productSectionCellStyle = {
+  padding: "16px 40px 24px",
+} satisfies CSSProperties;
+
 export const wordmarkStyle = {
-  color: "#2f251f",
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "26px",
+  color: EMAIL_THEME.colours.primary,
+  fontFamily: EMAIL_THEME.fonts.display,
+  fontSize: `${EMAIL_THEME.typography.wordmark}px`,
   fontWeight: 700,
   lineHeight: "32px",
   textDecoration: "none",
@@ -90,9 +147,15 @@ export const fullWidthImageStyle = {
   width: "100%",
 } satisfies CSSProperties;
 
+export const heroImageStyle = {
+  ...fullWidthImageStyle,
+  borderRadius: "10px",
+  marginBottom: "26px",
+} satisfies CSSProperties;
+
 export const eyebrowStyle = {
-  color: "#9a5137",
-  fontSize: "14px",
+  color: EMAIL_THEME.colours.accent,
+  fontSize: `${EMAIL_THEME.typography.eyebrow}px`,
   fontWeight: 700,
   letterSpacing: "1.2px",
   lineHeight: "18px",
@@ -101,130 +164,47 @@ export const eyebrowStyle = {
 } satisfies CSSProperties;
 
 export const heroHeadingStyle = {
-  color: "#2f251f",
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "38px",
+  color: EMAIL_THEME.colours.primary,
+  fontFamily: EMAIL_THEME.fonts.display,
+  fontSize: `${EMAIL_THEME.typography.hero}px`,
+  fontWeight: 700,
   lineHeight: "44px",
   margin: "0 0 16px",
 } satisfies CSSProperties;
 
 export const headingTwoStyle = {
-  color: "#2f251f",
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "28px",
+  color: EMAIL_THEME.colours.primary,
+  fontFamily: EMAIL_THEME.fonts.display,
+  fontSize: `${EMAIL_THEME.typography.heading}px`,
+  fontWeight: 700,
   lineHeight: "34px",
   margin: "0",
 } satisfies CSSProperties;
 
 export const headingThreeStyle = {
-  color: "#2f251f",
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "22px",
+  color: EMAIL_THEME.colours.primary,
+  fontFamily: EMAIL_THEME.fonts.display,
+  fontSize: `${EMAIL_THEME.typography.subheading}px`,
+  fontWeight: 700,
   lineHeight: "28px",
   margin: "0",
 } satisfies CSSProperties;
 
 export const bodyTextStyle = {
-  color: "#5f5047",
-  fontSize: "16px",
+  color: EMAIL_THEME.colours.body,
+  fontSize: `${EMAIL_THEME.typography.body}px`,
   lineHeight: "25px",
   margin: "0",
 } satisfies CSSProperties;
 
-export const productNameStyle = {
-  color: "#2f251f",
-  fontFamily: 'Georgia, "Times New Roman", serif',
-  fontSize: "22px",
-  lineHeight: "28px",
-  margin: "0 0 10px",
-} satisfies CSSProperties;
-
-export const productPriceStyle = {
-  color: "#2f251f",
-  fontSize: "16px",
-  fontWeight: 700,
-  lineHeight: "22px",
+export const bodyTextWithTopMarginStyle = {
+  ...bodyTextStyle,
   margin: "12px 0 0",
 } satisfies CSSProperties;
 
-export const cardStyle = {
-  backgroundColor: "#f8f3ed",
-  border: "1px solid #e4d7ca",
-  borderCollapse: "separate",
-  borderRadius: "12px",
-  width: "100%",
-} satisfies CSSProperties;
-
-export const cardContentStyle = {
-  padding: "22px",
-} satisfies CSSProperties;
-
-export const featurePanelStyle = {
-  backgroundColor: "#f8f3ed",
-  border: "1px solid #e4d7ca",
-  borderCollapse: "separate",
-  borderRadius: "12px",
-  width: "100%",
-} satisfies CSSProperties;
-
-export const buttonTableStyle = {
-  borderCollapse: "separate",
-  margin: "20px auto 0",
-} satisfies CSSProperties;
-
-export const buttonCellStyle = {
-  backgroundColor: "#9a5137",
-  borderRadius: "8px",
-  height: "48px",
-  textAlign: "center",
-} satisfies CSSProperties;
-
-export const buttonLinkStyle = {
-  color: "#ffffff",
-  display: "inline-block",
-  fontSize: "15px",
-  fontWeight: 700,
-  lineHeight: "20px",
-  padding: "14px 22px",
-  textDecoration: "none",
-} satisfies CSSProperties;
-
-export const discountPanelStyle = {
-  backgroundColor: "#efe0d2",
-  border: "1px solid #d9bba3",
-  borderCollapse: "separate",
-  borderRadius: "12px",
-  width: "100%",
-} satisfies CSSProperties;
-
-export const discountCodeStyle = {
-  backgroundColor: "#fffdf9",
-  border: "1px dashed #9a5137",
-  borderRadius: "6px",
-  color: "#2f251f",
-  display: "inline-block",
-  fontSize: "20px",
-  fontWeight: 700,
-  letterSpacing: "2px",
-  lineHeight: "26px",
-  marginTop: "16px",
-  padding: "10px 16px",
-} satisfies CSSProperties;
-
-export const complianceStyle = {
-  borderTop: "1px solid #e4d7ca",
-  color: "#74675e",
-  fontSize: "12px",
-  lineHeight: "18px",
-  padding: "24px 40px 32px",
-  textAlign: "center",
-} satisfies CSSProperties;
-
-export const complianceParagraphStyle = {
-  margin: "0 0 8px",
-} satisfies CSSProperties;
-
-export const complianceLinkStyle = {
-  color: "#74675e",
+export const inlineLinkStyle = {
+  color: EMAIL_THEME.colours.accent,
+  fontSize: `${EMAIL_THEME.typography.body}px`,
+  lineHeight: "25px",
   textDecoration: "underline",
 } satisfies CSSProperties;

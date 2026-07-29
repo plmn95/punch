@@ -1,10 +1,10 @@
 import type { HeroStackedBlock } from "../../core/schemas/index.js";
 import {
   bodyTextStyle,
-  centeredSectionCellStyle,
   eyebrowStyle,
-  fullWidthImageStyle,
   heroHeadingStyle,
+  heroImageStyle,
+  heroSectionCellStyle,
 } from "../styles.js";
 import { BlockFrame, EmailButton } from "./shared.js";
 import { renderHttpUrl } from "../render-contract.js";
@@ -19,22 +19,34 @@ export function HeroStacked({ block }: HeroStackedProps) {
     <BlockFrame
       blockId={block.id}
       blockType={block.type}
-      cellStyle={centeredSectionCellStyle}
+      cellStyle={heroSectionCellStyle}
     >
       {block.image === undefined ? null : (
         <img
           alt={block.image.alt}
+          className="punch-mobile-image"
+          data-punch-image-role="hero"
           src={renderHttpUrl(block.image.url)}
-          style={fullWidthImageStyle}
+          style={heroImageStyle}
           width={520}
         />
       )}
       {block.eyebrow === undefined ? null : (
-        <p style={eyebrowStyle}>{block.eyebrow}</p>
+        <p data-punch-text-role="eyebrow-card" style={eyebrowStyle}>
+          {block.eyebrow}
+        </p>
       )}
-      <h1 style={heroHeadingStyle}>{block.heading}</h1>
+      <h1
+        className="punch-hero-heading"
+        data-punch-text-role="hero-heading"
+        style={heroHeadingStyle}
+      >
+        {block.heading}
+      </h1>
       {block.body === undefined ? null : (
-        <p style={bodyTextStyle}>{block.body}</p>
+        <p data-punch-text-role="body-card" style={bodyTextStyle}>
+          {block.body}
+        </p>
       )}
       {block.cta === undefined ? null : <EmailButton action={block.cta} />}
     </BlockFrame>

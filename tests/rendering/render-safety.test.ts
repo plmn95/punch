@@ -28,8 +28,8 @@ it("renders only the restricted inline Markdown subset with React escaping", asy
 
   expect(html).toContain("<strong>bold &amp; bright</strong>");
   expect(html).toContain("<em>quiet</em>");
-  expect(html).toContain(
-    '<a href="https://example.com/path?a=1&amp;b=2">shop</a>',
+  expect(html).toMatch(
+    /<a [^>]*href="https:\/\/example\.com\/path\?a=1&amp;b=2"[^>]*>shop<\/a>/u,
   );
   expect(normalisedHtml).toContain("[unsafe](javascript:alert(1))");
   expect(normalisedHtml).toContain("![image](https://example.com/image.jpg)");

@@ -114,6 +114,9 @@ it("renders the fixed fixture into deterministic, ordered standalone HTML", asyn
   expect(first).toContain(
     "Meet three Kiln &amp; Leaf pieces and save 15% with TABLE15.",
   );
+  expect(first).toContain(
+    '<time dateTime="2027-02-14T23:59:00+02:00">14 February 2027</time>',
+  );
 
   let previousBlockIndex = -1;
   for (const [index, blockType] of EXPECTED_BLOCK_TYPES.entries()) {

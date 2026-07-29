@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "0.1.0",
+  "goal": "sales",
+  "subject": "Six pieces for a calmer desk",
+  "preheader": "Start with the Anchor Notebook, then build a practical desk set.",
+  "blocks": [
+    {
+      "type": "header-standard",
+      "brandName": "Quiet Relay",
+      "homeUrl": "https://quiet-relay.example.com/",
+      "id": "block-01"
+    },
+    {
+      "type": "hero-stacked",
+      "eyebrow": "The desk reset",
+      "heading": "Clear space for what comes next",
+      "body": "Six practical pieces, arranged around one calmer working surface.",
+      "id": "block-02"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Begin with the Anchor Notebook",
+      "id": "block-03"
+    },
+    {
+      "type": "body-paragraph",
+      "markdown": "A lay-flat notebook sets the pace, with five supporting tools selected to keep everyday work close and orderly.",
+      "id": "block-04"
+    },
+    {
+      "type": "product-feature",
+      "eyebrow": "The starting point",
+      "productId": "product-01",
+      "name": "Anchor Notebook",
+      "description": "A clothbound, lay-flat notebook with 192 ruled pages and a stitched spine.",
+      "price": {
+        "amount": "22.00",
+        "currency": "USD",
+        "display": "$22"
+      },
+      "image": {
+        "url": "https://quiet-relay.example.com/images/products/anchor-notebook.jpg",
+        "alt": "Charcoal Anchor Notebook open beside a pencil"
+      },
+      "cta": {
+        "label": "View Anchor Notebook",
+        "href": "https://quiet-relay.example.com/products/anchor-notebook"
+      },
+      "id": "block-05"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Add the supporting pieces",
+      "id": "block-06"
+    },
+    {
+      "type": "product-grid",
+      "columns": 2,
+      "items": [
+        {
+          "productId": "product-02",
+          "name": "Loop Pen Set",
+          "description": "Three fine-tip pens in charcoal, rust, and moss, packed in a paper sleeve.",
+          "price": {
+            "amount": "18.00",
+            "currency": "USD",
+            "display": "$18"
+          },
+          "image": {
+            "url": "https://quiet-relay.example.com/images/products/loop-pen-set.jpg",
+            "alt": "Three Loop pens in charcoal, rust, and moss"
+          },
+          "cta": {
+            "label": "View Loop Pen Set",
+            "href": "https://quiet-relay.example.com/products/loop-pen-set"
+          }
+        },
+        {
+          "productId": "product-03",
+          "name": "Fold Desk Mat",
+          "description": "A reversible desk mat with a felt side and a smooth cork side.",
+          "price": {
+            "amount": "64.00",
+            "currency": "USD",
+            "display": "$64"
+          },
+          "image": {
+            "url": "https://quiet-relay.example.com/images/products/fold-desk-mat.jpg",
+            "alt": "Rust Fold Desk Mat showing felt and cork surfaces"
+          },
+          "cta": {
+            "label": "View Fold Desk Mat",
+            "href": "https://quiet-relay.example.com/products/fold-desk-mat"
+          }
+        },
+        {
+          "productId": "product-04",
+          "name": "Signal Tray",
+          "description": "A low-profile powder-coated steel tray for notes, cables, and small tools.",
+          "price": {
+            "amount": "36.00",
+            "currency": "USD",
+            "display": "$36"
+          },
+          "image": {
+            "url": "https://quiet-relay.example.com/images/products/signal-tray.jpg",
+            "alt": "Moss Signal Tray holding notes and a charging cable"
+          },
+          "cta": {
+            "label": "View Signal Tray",
+            "href": "https://quiet-relay.example.com/products/signal-tray"
+          }
+        },
+        {
+          "productId": "product-05",
+          "name": "Pebble Clip Set",
+          "description": "Eight rounded steel clips with a matte mineral finish.",
+          "price": {
+            "amount": "12.00",
+            "currency": "USD",
+            "display": "$12"
+          },
+          "image": {
+            "url": "https://quiet-relay.example.com/images/products/pebble-clip-set.jpg",
+            "alt": "Eight rounded Pebble clips in mineral colours"
+          },
+          "cta": {
+            "label": "View Pebble Clip Set",
+            "href": "https://quiet-relay.example.com/products/pebble-clip-set"
+          }
+        },
+        {
+          "productId": "product-06",
+          "name": "Sunday Planner",
+          "description": "An undated weekly planner with 52 spreads and a separate notes section.",
+          "price": {
+            "amount": "28.00",
+            "currency": "USD",
+            "display": "$28"
+          },
+          "image": {
+            "url": "https://quiet-relay.example.com/images/products/sunday-planner.jpg",
+            "alt": "Sunday Planner open to an undated weekly spread"
+          },
+          "cta": {
+            "label": "View Sunday Planner",
+            "href": "https://quiet-relay.example.com/products/sunday-planner"
+          }
+        }
+      ],
+      "id": "block-07"
+    },
+    {
+      "type": "cta-block",
+      "heading": "Build your desk set",
+      "body": "Choose the pieces that fit the way you work.",
+      "actions": [
+        {
+          "label": "See the desk reset",
+          "href": "https://quiet-relay.example.com/collections/desk-reset"
+        }
+      ],
+      "id": "block-08"
+    }
+  ]
+}
