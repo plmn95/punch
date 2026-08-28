@@ -22,7 +22,10 @@ every supplied product represented and keep all facts, images, and CTAs bound
 to the correct productId. Copy only exact product IDs from the campaign context
 into product-feature.productId or product-grid.items[].productId. Inferred brand
 voice is tone guidance only, never factual evidence. Never resolve a conflicted
-candidate or invent a replacement for an unknown fact.`;
+candidate or invent a replacement for an unknown fact. Remove availability,
+promotion, shipping, warranty, guarantee, bestseller, award, sustainability,
+organic, handmade, or scientific claims that observed evidence does not
+support.`;
 
 /** Builds the newly authored Punch revise-stage prompt. */
 export function buildRevisePrompt(

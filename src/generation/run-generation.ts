@@ -24,6 +24,10 @@ import {
   validateProductEvidenceReferences,
   type CampaignGroundingValidation,
 } from "../validation/campaign-grounding-validation.js";
+import {
+  assertCampaignClaims,
+  type CampaignClaimValidation,
+} from "../validation/campaign-claim-validation.js";
 import { GenerationError, toGenerationError } from "./generation-error.js";
 import {
   buildCritiquePrompt,
@@ -58,6 +62,7 @@ export type GenerationRun = Readonly<{
   revisedCampaign?: Campaign;
   addressedIssueIds?: readonly IssueId[];
   grounding: CampaignGroundingValidation;
+  claims: CampaignClaimValidation;
   usage: GenerationUsage;
   promptVersions: Readonly<{
     emit: string;
@@ -193,6 +198,7 @@ function acceptedRun(
     draft,
     critique,
     grounding: assertCampaignGrounding(draft, context),
+    claims: assertCampaignClaims(draft, context),
     usage: aggregateModelUsage(usageCalls),
     promptVersions: {
       emit: PROMPT_VERSIONS.emit,
@@ -229,6 +235,7 @@ async function revisedRun(
     revisedCampaign,
     addressedIssueIds: revision.addressedIssueIds,
     grounding: assertCampaignGrounding(revisedCampaign, context),
+    claims: assertCampaignClaims(revisedCampaign, context),
     usage: aggregateModelUsage(usageCalls),
     promptVersions: {
       emit: PROMPT_VERSIONS.emit,

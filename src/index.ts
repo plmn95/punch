@@ -65,3 +65,20 @@ export {
   type ValidationDocument,
   type WriteOutputOptions,
 } from "./output/index.js";
+
+export { renderCampaignHtml } from "./rendering/index.js";
+
+export {
+  CAMPAIGN_CLAIM_ISSUE_CODES,
+  CAMPAIGN_GROUNDING_ISSUE_CODES,
+  validateCampaignClaims,
+  validateCampaignGrounding,
+  validateProductEvidenceReferences,
+  validateRenderedCampaign,
+  type CampaignClaimIssue,
+  type CampaignClaimIssueCode,
+  type CampaignClaimValidation,
+  type CampaignGroundingIssue,
+  type CampaignGroundingIssueCode,
+  type CampaignGroundingValidation,
+} from "./validation/index.js";

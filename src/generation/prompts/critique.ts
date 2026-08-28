@@ -21,6 +21,8 @@ use of unknown or conflicted evidence, or schema-valid content that violates
 the stated goal. Each product-feature and each product-grid item must copy its
 exact productId from the campaign context; report any other ID. Treat inferred
 brand voice as tone-only and report any factual claim supported only by it. Use
+observed product evidence for availability, shipping, warranty, guarantee,
+bestseller, award, sustainability, organic, handmade, and scientific claims.
 advisory issues only for material improvements that do not make the campaign
 unsafe or ungrounded. Give bounded actionable summaries and instructions; do
 not rewrite the draft.`;

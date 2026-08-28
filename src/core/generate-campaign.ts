@@ -60,6 +60,7 @@ export async function generateCampaign(
   const rendered = validateRenderedCampaign(campaign, html);
   const checks = [
     { id: "campaign-grounding", passed: true as const },
+    { id: "campaign-claims", passed: true as const },
     ...rendered.checks.map((check) => ({
       id: `render-${check.id}`,
       passed: true as const,

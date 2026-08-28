@@ -7,6 +7,7 @@ import type {
   RevisionOutputPayload,
 } from "../core/schemas/index.js";
 import { validateCampaignGrounding } from "../validation/campaign-grounding-validation.js";
+import { validateCampaignClaims } from "../validation/campaign-claim-validation.js";
 
 /** Reports caller-owned goal and structured-offer invariant failures. */
 export function campaignStageIssues(
@@ -17,6 +18,11 @@ export function campaignStageIssues(
     campaign,
     context,
   ).issues.map((issue) => issue.code);
+  issues.push(
+    ...validateCampaignClaims(campaign, context).issues.map(
+      (issue) => issue.code,
+    ),
+  );
   if (campaign.goal !== context.goal) {
     issues.push("goal-mismatch");
   }

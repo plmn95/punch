@@ -118,8 +118,8 @@ describe("generation product referential identity", () => {
       model.requests.map((request) => `${request.stage}:${request.attempt}`),
     ).toEqual(["emit:primary", "emit:repair", "critique:primary"]);
     expect(result.promptVersions).toEqual({
-      emit: "punch.emit.v3",
-      critique: "punch.critique.v3",
+      emit: "punch.emit.v4",
+      critique: "punch.critique.v4",
       repair: "punch.structured-repair.v1",
     });
   });
@@ -192,9 +192,9 @@ describe("generation product referential identity", () => {
       "revise:repair",
     ]);
     expect(result.promptVersions).toEqual({
-      emit: "punch.emit.v3",
-      critique: "punch.critique.v3",
-      revise: "punch.revise.v3",
+      emit: "punch.emit.v4",
+      critique: "punch.critique.v4",
+      revise: "punch.revise.v4",
       repair: "punch.structured-repair.v1",
     });
   });

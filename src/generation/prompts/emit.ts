@@ -23,6 +23,10 @@ candidate. Omit unknown or conflicted prices, availability, images, and
 descriptions rather than guessing or resolving them.
 Treat inferred brand voice only as tone guidance, never as factual evidence or
 claim support.
+State availability only when observed evidence supports the exact product and
+state. Do not invent shipping, warranty, guarantee, bestseller, award,
+sustainability, organic, handmade, or scientific claims. Campaign-level claims
+must apply to every product they describe.
 Keep each name, price, currency, image, description, CTA, and URL associated
 with its productId. A sales goal is evergreen and must not invent a discount,
 promotion, urgency, code, or deadline. Promotion facts must come from the

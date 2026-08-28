@@ -42,8 +42,8 @@ describe("generation orchestration", () => {
       ]);
       expect(run.usage.calls).toHaveLength(2);
       expect(run.promptVersions).toEqual({
-        emit: "punch.emit.v3",
-        critique: "punch.critique.v3",
+        emit: "punch.emit.v4",
+        critique: "punch.critique.v4",
       });
     },
   );
@@ -66,6 +66,35 @@ describe("generation orchestration", () => {
       "revise:primary",
     ]);
     expect(model.remaining).toBe(0);
+  });
+
+  it("repairs unsupported prose inside the single revision stage", async () => {
+    const invalidRevision = {
+      ...createRevisionPayload(),
+      campaign: {
+        ...createRevisionPayload().campaign,
+        subject: "Lifetime warranty on fictional cups",
+      },
+    };
+    const model = new QueuedTextModel([
+      jsonResponse(createCampaignPayload()),
+      jsonResponse(createCritiquePayload("blocking")),
+      jsonResponse(invalidRevision),
+      jsonResponse(createRevisionPayload()),
+    ]);
+
+    const run = await runGeneration(createGenerationContext(), { model });
+
+    expect(run.claims.valid).toBe(true);
+    expect(requestSequence(model)).toEqual([
+      "emit:primary",
+      "critique:primary",
+      "revise:primary",
+      "revise:repair",
+    ]);
+    expect(
+      model.requests.filter((request) => request.stage === "revise"),
+    ).toHaveLength(2);
   });
 
   it("makes one revision for multiple blocking issues", async () => {
@@ -119,6 +148,28 @@ describe("generation orchestration", () => {
       "critique:primary",
     ]);
     expect(run.promptVersions.repair).toBe("punch.structured-repair.v1");
+  });
+
+  it("repairs an unsupported availability claim before critique", async () => {
+    const campaign = createCampaignPayload();
+    const unsupported = {
+      ...campaign,
+      subject: "Sold out: two fictional cups",
+    };
+    const model = new QueuedTextModel([
+      jsonResponse(unsupported),
+      jsonResponse(campaign),
+      jsonResponse(createCritiquePayload()),
+    ]);
+
+    const run = await runGeneration(createGenerationContext(), { model });
+
+    expect(run.claims).toEqual({ valid: true, issues: [] });
+    expect(requestSequence(model)).toEqual([
+      "emit:primary",
+      "emit:repair",
+      "critique:primary",
+    ]);
   });
 
   it("repairs mismatched promotion descriptions, codes, and deadlines", async () => {

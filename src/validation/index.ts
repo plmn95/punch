@@ -8,6 +8,14 @@ export {
   type CampaignGroundingValidation,
 } from "./campaign-grounding-validation.js";
 export {
+  CAMPAIGN_CLAIM_ISSUE_CODES,
+  assertCampaignClaims,
+  validateCampaignClaims,
+  type CampaignClaimIssue,
+  type CampaignClaimIssueCode,
+  type CampaignClaimValidation,
+} from "./campaign-claim-validation.js";
+export {
   assertRenderedCampaign,
   validateRenderedCampaign,
 } from "./render-validation.js";
