@@ -2,179 +2,158 @@ import {
   GenerateCampaignInputSchema,
   type GenerateCampaignInput,
 } from "../core/schemas/index.js";
+import type { BrandSettings } from "../brand/settings.js";
+import { CliArgumentError } from "./cli-error.js";
+import { brandFlags, flagValue, readFlags, type CliFlags } from "./flags.js";
+import { localPath } from "./local-files.js";
 
-const VALUE_FLAGS = new Set([
-  "--website",
-  "--product",
-  "--goal",
-  "--output",
-  "--instructions",
-  "--offer",
-  "--discount-code",
-  "--offer-ends-at",
-]);
-const BOOLEAN_FLAGS = new Set([
-  "--trace",
-  "--json",
-  "--force",
-  "--no-interactive",
-]);
+export { CliArgumentError } from "./cli-error.js";
+export type { CliArgumentErrorCode } from "./cli-error.js";
 
-export type GenerateCommand = Readonly<{
-  kind: "generate";
-  input: GenerateCampaignInput;
+export type CommonCommand = Readonly<{
   output: string;
-  trace: boolean;
   json: boolean;
   force: boolean;
+  brandPath?: string;
+  saveBrandPath?: string;
 }>;
-
+export type GenerateCommand = CommonCommand &
+  Readonly<{
+    kind: "generate";
+    input: GenerateCampaignInput;
+    trace: boolean;
+  }>;
+export type RenderCommand = CommonCommand &
+  Readonly<{
+    kind: "render";
+    campaignPath: string;
+    brand: BrandSettings;
+  }>;
 export type CliCommand =
   | GenerateCommand
+  | RenderCommand
   | Readonly<{ kind: "help" }>
   | Readonly<{ kind: "version" }>;
 
-export type CliArgumentErrorCode =
-  | "invalid-arguments"
-  | "missing-arguments"
-  | "unknown-command";
-
-/** Stable usage error without echoing user-supplied values. */
-export class CliArgumentError extends Error {
-  readonly code: CliArgumentErrorCode;
-
-  constructor(code: CliArgumentErrorCode, message: string) {
-    super(message);
-    this.name = "CliArgumentError";
-    this.code = code;
-  }
-}
-
-/** Parses the canonical non-interactive Punch command. */
+/** Parses explicit invocations without reading files, credentials or terminal state. */
 export function parseCliArguments(argv: readonly string[]): CliCommand {
-  if (argv.length === 0 || argv[0] === "--help" || argv[0] === "-h") {
+  if (argv.length === 0 || argv.includes("--help") || argv.includes("-h"))
     return { kind: "help" };
-  }
-  if (argv[0] === "--version" || argv[0] === "-v") {
-    return { kind: "version" };
-  }
-  if (argv[0] !== "generate") {
+  if (argv[0] === "--version" || argv[0] === "-v") return { kind: "version" };
+  if (argv[0] !== "generate" && argv[0] !== "render")
     throw new CliArgumentError(
       "unknown-command",
       "Unknown command. Use punch --help.",
     );
-  }
-  return parseGenerate(argv.slice(1));
+  const flags = readFlags(argv.slice(1));
+  return argv[0] === "render" ? parseRender(flags) : parseGenerate(flags);
 }
 
-/** Parses generate flags without prompting or accepting positional input. */
-function parseGenerate(argv: readonly string[]): GenerateCommand {
-  const values = new Map<string, string[]>();
-  const booleans = new Set<string>();
-  for (let index = 0; index < argv.length; index += 1) {
-    const flag = argv[index]!;
-    if (BOOLEAN_FLAGS.has(flag)) {
-      booleans.add(flag);
-      continue;
-    }
-    if (!VALUE_FLAGS.has(flag)) {
-      throw new CliArgumentError(
-        "invalid-arguments",
-        "Unknown or misplaced generate flag.",
-      );
-    }
-    const value = argv[index + 1];
-    if (value === undefined || value.startsWith("--")) {
-      throw new CliArgumentError(
-        "missing-arguments",
-        "A generate flag is missing its value.",
-      );
-    }
-    values.set(flag, [...(values.get(flag) ?? []), value]);
-    index += 1;
-  }
-  return buildGenerateCommand(values, booleans);
+/** Collects shared options while refusing unsafe local path spellings. */
+function commonCommand(flags: CliFlags): CommonCommand {
+  const output = flagValue(flags, "--output");
+  if (!output)
+    throw new CliArgumentError(
+      "missing-arguments",
+      "Choose an --output directory.",
+    );
+  localPath(output);
+  const brandPath = flagValue(flags, "--brand");
+  const saveBrandPath = flagValue(flags, "--save-brand");
+  return {
+    output,
+    json: flags.booleans.has("--json"),
+    force: flags.booleans.has("--force"),
+    ...(brandPath ? { brandPath: localPath(brandPath) } : {}),
+    ...(saveBrandPath ? { saveBrandPath: localPath(saveBrandPath) } : {}),
+  };
 }
 
-/** Validates multiplicity and builds the public campaign input. */
-function buildGenerateCommand(
-  values: ReadonlyMap<string, readonly string[]>,
-  booleans: ReadonlySet<string>,
-): GenerateCommand {
-  const website = singleValue(values, "--website");
-  const goal = singleValue(values, "--goal");
-  const output = singleValue(values, "--output");
-  const products = values.get("--product") ?? [];
-  if (!website || !goal || !output || products.length === 0) {
+/** Validates generation flags through the canonical public input contract. */
+function parseGenerate(flags: CliFlags): GenerateCommand {
+  if (flags.values.has("--campaign"))
+    throw new CliArgumentError(
+      "invalid-arguments",
+      "--campaign belongs to punch render.",
+    );
+  const website = flagValue(flags, "--website");
+  const goal = flagValue(flags, "--goal");
+  const products = flags.values.get("--product") ?? [];
+  if (!website || !goal || products.length === 0)
     throw new CliArgumentError(
       "missing-arguments",
       "Generate requires --website, --product, --goal and --output.",
     );
-  }
-  const input = campaignInput(values, website, products, goal);
-  return {
-    kind: "generate",
-    input: GenerateCampaignInputSchema.parse(input),
-    output,
-    trace: booleans.has("--trace"),
-    json: booleans.has("--json"),
-    force: booleans.has("--force"),
-  };
-}
-
-/** Returns one scalar flag and rejects accidental duplicates. */
-function singleValue(
-  values: ReadonlyMap<string, readonly string[]>,
-  flag: string,
-): string | undefined {
-  const entries = values.get(flag);
-  if (entries && entries.length > 1) {
-    throw new CliArgumentError(
-      "invalid-arguments",
-      "A scalar flag was supplied more than once.",
-    );
-  }
-  return entries?.[0];
-}
-
-/** Maps CLI offer flags to the discriminated public input schema. */
-function campaignInput(
-  values: ReadonlyMap<string, readonly string[]>,
-  website: string,
-  products: readonly string[],
-  goal: string,
-): unknown {
-  const instructions = singleValue(values, "--instructions");
-  const offerDescription = singleValue(values, "--offer");
-  const code = singleValue(values, "--discount-code");
-  const endsAt = singleValue(values, "--offer-ends-at");
-  const base = {
+  const offer = offerFlags(flags, goal);
+  const instructions = flagValue(flags, "--instructions");
+  const brand = brandFlags(flags);
+  const input = GenerateCampaignInputSchema.parse({
     website,
     products,
     goal,
     ...(instructions ? { instructions } : {}),
+    ...(Object.keys(brand).length ? { brand } : {}),
+    ...(offer ? { offer } : {}),
+  });
+  return {
+    ...commonCommand(flags),
+    kind: "generate",
+    input,
+    trace: flags.booleans.has("--trace"),
   };
-  if (goal !== "promotion") {
-    if (offerDescription || code || endsAt) {
-      throw new CliArgumentError(
-        "invalid-arguments",
-        "Offer flags require --goal promotion.",
-      );
-    }
-    return base;
-  }
-  if (!offerDescription) {
+}
+
+/** Keeps offer requirements identical in explicit and guided generation. */
+function offerFlags(flags: CliFlags, goal: string) {
+  const description = flagValue(flags, "--offer");
+  const code = flagValue(flags, "--discount-code");
+  const endsAt = flagValue(flags, "--offer-ends-at");
+  if (goal !== "promotion" && (description || code || endsAt))
+    throw new CliArgumentError(
+      "invalid-arguments",
+      "Offer flags require --goal promotion.",
+    );
+  if (goal === "promotion" && !description)
     throw new CliArgumentError(
       "missing-arguments",
       "Promotion requires --offer.",
     );
-  }
+  return goal === "promotion"
+    ? { description, ...(code ? { code } : {}), ...(endsAt ? { endsAt } : {}) }
+    : undefined;
+}
+
+/** Parses a render-only invocation that never requires an API key. */
+function parseRender(flags: CliFlags): RenderCommand {
+  const allowed = new Set([
+    "--campaign",
+    "--output",
+    "--brand",
+    "--save-brand",
+    "--primary-colour",
+    "--background-colour",
+    "--text-colour",
+    "--heading-font",
+    "--body-font",
+  ]);
+  if (
+    [...flags.values.keys()].some((key) => !allowed.has(key)) ||
+    flags.booleans.has("--trace")
+  )
+    throw new CliArgumentError(
+      "invalid-arguments",
+      "Generation-only flags cannot be used with punch render.",
+    );
+  const campaignPath = flagValue(flags, "--campaign");
+  if (!campaignPath)
+    throw new CliArgumentError(
+      "missing-arguments",
+      "Render requires --campaign and --output.",
+    );
   return {
-    ...base,
-    offer: {
-      description: offerDescription,
-      ...(code ? { code } : {}),
-      ...(endsAt ? { endsAt } : {}),
-    },
+    ...commonCommand(flags),
+    kind: "render",
+    campaignPath: localPath(campaignPath),
+    brand: brandFlags(flags),
   };
 }

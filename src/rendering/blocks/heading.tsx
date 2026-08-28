@@ -1,9 +1,6 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type { HeadingBlock } from "../../core/schemas/index.js";
-import {
-  headingSectionCellStyle,
-  headingThreeStyle,
-  headingTwoStyle,
-} from "../styles.js";
+
 import { BlockFrame } from "./shared.js";
 
 type HeadingProps = {
@@ -12,6 +9,8 @@ type HeadingProps = {
 
 /** Renders an explicit level-two or level-three campaign heading. */
 export function Heading({ block }: HeadingProps) {
+  const { headingSectionCellStyle, headingTwoStyle, headingThreeStyle } =
+    useRenderStyles();
   return (
     <BlockFrame
       blockId={block.id}

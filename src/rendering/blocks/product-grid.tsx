@@ -1,3 +1,4 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type {
   ProductGridBlock,
   ProductPresentation,
@@ -7,7 +8,7 @@ import {
   gridImageWidth,
   gridRowWidth,
 } from "../render-contract.js";
-import { productSectionCellStyle } from "../styles.js";
+
 import { BlockFrame, ProductCard } from "./shared.js";
 
 type ProductGridProps = {
@@ -82,6 +83,7 @@ function ProductRow({
 
 /** Renders ordered products in balanced, responsive presentation-table rows. */
 export function ProductGrid({ block }: ProductGridProps) {
+  const { productSectionCellStyle } = useRenderStyles();
   const rows = createRows(block.items, block.columns);
 
   return (

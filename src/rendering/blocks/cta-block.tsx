@@ -1,25 +1,17 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type { CtaBlock } from "../../core/schemas/index.js";
-import {
-  bodyTextWithTopMarginStyle,
-  centeredSectionCellStyle,
-  headingTwoStyle,
-} from "../styles.js";
+
 import { BlockFrame, EmailButton } from "./shared.js";
 
 type CtaBlockProps = {
   readonly block: CtaBlock;
 };
 
-/** Renders a closing region with one or two schema-validated actions. */
-export function ClosingCta({ block }: CtaBlockProps) {
-  const actionWidth = `${100 / block.actions.length}%`;
-
+/** Renders the optional copy above the closing actions. */
+function ClosingCopy({ block }: CtaBlockProps) {
+  const { headingTwoStyle, bodyTextWithTopMarginStyle } = useRenderStyles();
   return (
-    <BlockFrame
-      blockId={block.id}
-      blockType={block.type}
-      cellStyle={centeredSectionCellStyle}
-    >
+    <>
       {block.heading === undefined ? null : (
         <h2 data-punch-text-role="heading" style={headingTwoStyle}>
           {block.heading}
@@ -33,6 +25,21 @@ export function ClosingCta({ block }: CtaBlockProps) {
           {block.body}
         </p>
       )}
+    </>
+  );
+}
+
+/** Renders a closing region with one or two schema-validated actions. */
+export function ClosingCta({ block }: CtaBlockProps) {
+  const { centeredSectionCellStyle } = useRenderStyles();
+  const actionWidth = `${100 / block.actions.length}%`;
+  return (
+    <BlockFrame
+      blockId={block.id}
+      blockType={block.type}
+      cellStyle={centeredSectionCellStyle}
+    >
+      <ClosingCopy block={block} />
       <table
         border={0}
         cellPadding={0}

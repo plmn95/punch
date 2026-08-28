@@ -72,6 +72,7 @@ export function extractBrand(
 
   return {
     evidence,
+    styleRoles: styles.roles,
     segments: buildSourceSegments(document),
     stylesheetUrls: discoverStylesheetUrls(document, source.finalUrl),
   };

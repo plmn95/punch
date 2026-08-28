@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { BrandSettingsSchema } from "../../brand/settings.js";
 
 import {
   CodeTextSchema,
@@ -20,6 +21,7 @@ export const OfferInputSchema = z.strictObject({
 });
 
 const generateCampaignInputBase = {
+  brand: BrandSettingsSchema.optional(),
   website: HttpUrlSchema,
   products: z.array(HttpUrlSchema).min(1).max(6),
   instructions: LongTextSchema.optional(),

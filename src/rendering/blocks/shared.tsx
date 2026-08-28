@@ -1,3 +1,4 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type { CSSProperties, ReactNode } from "react";
 
 import type {
@@ -5,19 +6,7 @@ import type {
   Image,
   ProductPresentation,
 } from "../../core/schemas/index.js";
-import {
-  buttonCellStyle,
-  buttonLinkStyle,
-  buttonTableStyle,
-  cardContentStyle,
-  cardStyle,
-  compactButtonLinkStyle,
-  compactButtonTableStyle,
-  imageFreeCardStyle,
-  productCopyCellStyle,
-  productNameStyle,
-  productPriceStyle,
-} from "../commerce-styles.js";
+
 import {
   formatMoney,
   gridImageRole,
@@ -25,7 +14,6 @@ import {
   type RenderImageRole,
 } from "../render-contract.js";
 import { EMAIL_THEME } from "../render-theme.js";
-import { bodyTextStyle, fullWidthImageStyle } from "../styles.js";
 
 type BlockFrameProps = {
   readonly blockId: string;
@@ -75,6 +63,13 @@ export function EmailButton({
   compact = false,
   productId,
 }: EmailButtonProps) {
+  const {
+    compactButtonTableStyle,
+    buttonTableStyle,
+    compactButtonLinkStyle,
+    buttonLinkStyle,
+    buttonCellStyle,
+  } = useRenderStyles();
   const productMarker =
     productId === undefined ? undefined : { "data-punch-cta-for": productId };
   const tableStyle = compact ? compactButtonTableStyle : buttonTableStyle;
@@ -116,6 +111,7 @@ export function ProductImage({
   role,
   width,
 }: ProductImageProps) {
+  const { fullWidthImageStyle } = useRenderStyles();
   return (
     <img
       alt={image.alt}
@@ -137,6 +133,12 @@ function ProductCopy({
   readonly copyHeight: number;
   readonly product: ProductPresentation;
 }) {
+  const {
+    productCopyCellStyle,
+    productNameStyle,
+    bodyTextStyle,
+    productPriceStyle,
+  } = useRenderStyles();
   return (
     <td
       className="punch-product-copy"
@@ -193,6 +195,7 @@ function ProductCardBody({
   columns,
   product,
 }: Pick<ProductCardProps, "columns" | "product">) {
+  const { cardContentStyle } = useRenderStyles();
   const copyHeight = EMAIL_THEME.geometry.productCopyHeight[columns];
   return (
     <tr>
@@ -231,6 +234,7 @@ export function ProductCard({
   imageWidth,
   product,
 }: ProductCardProps) {
+  const { imageFreeCardStyle, cardStyle } = useRenderStyles();
   return (
     <table
       border={0}

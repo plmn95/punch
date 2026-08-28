@@ -1,21 +1,18 @@
 import { ZodError } from "zod";
 
-import { generateCampaign } from "../core/generate-campaign.js";
 import { ExtractionError } from "../extraction/extraction-error.js";
 import { GenerationError } from "../generation/generation-error.js";
-import { OutputError, writeCampaignOutput } from "../output/index.js";
-import { createAnthropicProvider } from "../providers/anthropic.js";
-import { CliArgumentError, parseCliArguments } from "./arguments.js";
+import { OutputError } from "../output/index.js";
+import { BrandStyleError } from "../brand/settings.js";
+import { PublicFetchError } from "../extraction/http/index.js";
+import { CliArgumentError } from "./arguments.js";
+import { resolveInvocation } from "./guide-command.js";
+import { executeCommand } from "./execute-command.js";
+import type { CliIo } from "./io.js";
+export type { CliIo } from "./io.js";
 import { CLI_HELP } from "./help.js";
 
 export const PUNCH_VERSION = "0.1.0";
-
-export type CliIo = Readonly<{
-  stdout: (value: string) => void;
-  stderr: (value: string) => void;
-  env: Readonly<Record<string, string | undefined>>;
-  signal: AbortSignal;
-}>;
 
 type CliFailure = Readonly<{
   code: string;
@@ -30,7 +27,7 @@ export async function runCli(
 ): Promise<number> {
   let json = argv.includes("--json");
   try {
-    const command = parseCliArguments(argv);
+    const { command, guided } = await resolveInvocation(argv, io);
     if (command.kind === "help") {
       io.stdout(CLI_HELP);
       return 0;
@@ -40,22 +37,8 @@ export async function runCli(
       return 0;
     }
     json = command.json;
-    const apiKey = io.env.ANTHROPIC_API_KEY?.trim();
-    if (!apiKey) {
-      throw new CliArgumentError(
-        "missing-arguments",
-        "ANTHROPIC_API_KEY is required.",
-      );
-    }
-    const result = await generateCampaign(command.input, {
-      provider: createAnthropicProvider({ apiKey }),
-      signal: io.signal,
-      trace: command.trace,
-    });
-    const output = await writeCampaignOutput(result, command.output, {
-      force: command.force,
-    });
-    writeSuccess(io, json, output);
+    const output = await executeCommand(command, io, guided);
+    writeSuccess(io, json, output, command.kind);
     return 0;
   } catch (error) {
     const failure = normaliseCliFailure(error);
@@ -65,12 +48,21 @@ export async function runCli(
 }
 
 /** Writes one stable success result without mixing stdout modes. */
-function writeSuccess(io: CliIo, json: boolean, output: string): void {
+function writeSuccess(
+  io: CliIo,
+  json: boolean,
+  output: string,
+  kind: "generate" | "render",
+): void {
   if (json) {
-    io.stdout(`${JSON.stringify({ ok: true, status: "valid", output })}\n`);
+    io.stdout(
+      `${JSON.stringify({ ok: true, status: "valid", output, validationScope: kind === "render" ? "render-only" : "generation-and-render" })}\n`,
+    );
     return;
   }
-  io.stdout(`Generated a validated campaign in ${output}\n`);
+  io.stdout(
+    `${kind === "render" ? "Rendered" : "Generated"} a validated campaign in ${output}\n`,
+  );
 }
 
 /** Writes exactly one JSON failure or one plain stderr diagnostic. */
@@ -94,11 +86,19 @@ function normaliseCliFailure(error: unknown): CliFailure {
       retryable: false,
     };
   }
-  if (error instanceof ExtractionError || error instanceof GenerationError) {
+  if (
+    error instanceof ExtractionError ||
+    error instanceof GenerationError ||
+    error instanceof BrandStyleError ||
+    error instanceof PublicFetchError
+  ) {
     return {
       code: error.code,
       message: error.message,
-      retryable: error.retryable,
+      retryable:
+        "retryable" in error
+          ? error.retryable
+          : ["network", "timeout", "dns-failure"].includes(error.code),
     };
   }
   if (error instanceof OutputError) {

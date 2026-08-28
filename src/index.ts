@@ -67,6 +67,17 @@ export {
 } from "./output/index.js";
 
 export { renderCampaignHtml } from "./rendering/index.js";
+export { renderCampaign, restyleCampaign } from "./core/render-campaign.js";
+export { resolveBrand } from "./brand/resolve-brand.js";
+export {
+  BrandSettingsSchema,
+  BrandProfileSchema,
+  ResolvedBrandSchema,
+  BrandStyleError,
+  type BrandSettings,
+  type CompleteBrandSettings,
+  type ResolvedBrand,
+} from "./brand/settings.js";
 
 export {
   CAMPAIGN_CLAIM_ISSUE_CODES,

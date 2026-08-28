@@ -1,11 +1,6 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type { HeroStackedBlock } from "../../core/schemas/index.js";
-import {
-  bodyTextStyle,
-  eyebrowStyle,
-  heroHeadingStyle,
-  heroImageStyle,
-  heroSectionCellStyle,
-} from "../styles.js";
+
 import { BlockFrame, EmailButton } from "./shared.js";
 import { renderHttpUrl } from "../render-contract.js";
 
@@ -15,6 +10,13 @@ type HeroStackedProps = {
 
 /** Renders a vertically composed campaign introduction. */
 export function HeroStacked({ block }: HeroStackedProps) {
+  const {
+    heroSectionCellStyle,
+    heroImageStyle,
+    eyebrowStyle,
+    heroHeadingStyle,
+    bodyTextStyle,
+  } = useRenderStyles();
   return (
     <BlockFrame
       blockId={block.id}

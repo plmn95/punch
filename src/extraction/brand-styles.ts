@@ -1,4 +1,11 @@
 import postcss from "postcss";
+import type { BrandStyleEvidence } from "../brand/settings.js";
+import {
+  collectStyleRoles,
+  resolveStyleRoles,
+  type SourcedStyleCandidate,
+  type StyleRoleCandidate,
+} from "./style-role-candidates.js";
 
 import type { EvidenceRef } from "../core/schemas/index.js";
 import type { CssSource, HtmlSource } from "./contracts.js";
@@ -38,6 +45,7 @@ const MAX_DECLARATION_VALUE_BYTES = 4_096;
 const MAX_STYLE_VALUES_PER_SOURCE = 32;
 
 export type BrandStyles = Readonly<{
+  roles: BrandStyleEvidence;
   colours: string[];
   fonts: string[];
   colourEvidence: EvidenceRef[];
@@ -45,6 +53,7 @@ export type BrandStyles = Readonly<{
 }>;
 
 type SourceStyles = Readonly<{
+  roles: StyleRoleCandidate[];
   colours: string[];
   fonts: string[];
   reference: EvidenceRef;
@@ -65,6 +74,7 @@ function extractStyles(sources: readonly CssSource[]): BrandStyles {
   const fonts: string[] = [];
   const colourEvidence: EvidenceRef[] = [];
   const fontEvidence: EvidenceRef[] = [];
+  const candidates: SourcedStyleCandidate[] = [];
   for (const source of sources) {
     const extracted = extractSourceStyles(source);
     if (!extracted) {
@@ -72,6 +82,12 @@ function extractStyles(sources: readonly CssSource[]): BrandStyles {
     }
     colours.push(...extracted.colours);
     fonts.push(...extracted.fonts);
+    candidates.push(
+      ...extracted.roles.map((role) => ({
+        ...role,
+        evidence: { url: source.url, field: source.field },
+      })),
+    );
     if (extracted.colours.length > 0) {
       colourEvidence.push(extracted.reference);
     }
@@ -80,6 +96,7 @@ function extractStyles(sources: readonly CssSource[]): BrandStyles {
     }
   }
   return {
+    roles: resolveStyleRoles(candidates),
     colours: unique(colours).slice(0, 8),
     fonts: unique(fonts).slice(0, 8),
     colourEvidence: uniqueByJson(colourEvidence).slice(0, 8),
@@ -130,7 +147,7 @@ function collectStyleValues(css: string): Omit<SourceStyles, "reference"> {
       appendBounded(fonts, extractFonts(declaration.value));
     }
   });
-  return { colours, fonts };
+  return { colours, fonts, roles: collectStyleRoles(root) };
 }
 
 /** Reports whether a declaration value is safe for bounded token extraction. */
@@ -178,7 +195,7 @@ function inlineCssSources(
     if (style) {
       sources.push({
         url: source.finalUrl,
-        css: `x{${style}}`,
+        css: `${elementName(element)}{${style}}`,
         field: styleField(sources.length),
       });
     }

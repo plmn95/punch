@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "0.1.0",
+  "goal": "product-launch",
+  "subject": "Meet the Pebble Weekender",
+  "preheader": "A soft-sided overnight bag with thoughtful space for the essentials.",
+  "blocks": [
+    {
+      "type": "header-standard",
+      "brandName": "Soft Orbit",
+      "homeUrl": "https://soft-orbit.example.com/",
+      "id": "block-01"
+    },
+    {
+      "type": "hero-stacked",
+      "eyebrow": "New for short escapes",
+      "heading": "Pack one more good day",
+      "body": "Meet the Pebble Weekender, arranged for overnight plans and easy unpacking.",
+      "id": "block-02"
+    },
+    {
+      "type": "product-feature",
+      "eyebrow": "The new arrival",
+      "productId": "product-01",
+      "name": "Pebble Weekender",
+      "description": "A soft-sided overnight bag with a wide zip opening, two interior pockets, and an adjustable woven strap.",
+      "price": { "amount": "148.00", "currency": "USD", "display": "$148" },
+      "cta": {
+        "label": "Explore the Pebble Weekender",
+        "href": "https://soft-orbit.example.com/products/pebble-weekender"
+      },
+      "id": "block-03"
+    },
+    {
+      "type": "heading",
+      "level": 2,
+      "text": "Small details, easier departures",
+      "id": "block-04"
+    },
+    {
+      "type": "body-paragraph",
+      "markdown": "A wide zip opening keeps the main compartment easy to scan, while **two interior pockets** separate smaller essentials.",
+      "id": "block-05"
+    },
+    {
+      "type": "cta-block",
+      "heading": "Ready for the next overnight?",
+      "body": "See the complete bag details before you pack.",
+      "actions": [
+        {
+          "label": "View the Pebble Weekender",
+          "href": "https://soft-orbit.example.com/products/pebble-weekender"
+        }
+      ],
+      "id": "block-06"
+    }
+  ]
+}

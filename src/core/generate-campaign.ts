@@ -4,13 +4,18 @@ import type {
   GenerateCampaignInput,
   ProductEvidence,
 } from "./schemas/index.js";
-import { runCampaignPipeline } from "./run-campaign-pipeline.js";
+import {
+  runCampaignPipeline,
+  type CampaignPipelineRun,
+} from "./run-campaign-pipeline.js";
 import type { PunchProvider } from "../providers/anthropic.js";
 import { renderCampaignHtml } from "../rendering/index.js";
 import { validateRenderedCampaign } from "../validation/index.js";
 import type { GenerationUsage } from "../providers/index.js";
+import type { BrandReviewer, ResolvedBrand } from "../brand/settings.js";
 
 export type GenerateCampaignOptions = Readonly<{
+  reviewBrand?: BrandReviewer;
   provider: PunchProvider;
   signal?: AbortSignal;
   trace?: boolean;
@@ -19,6 +24,7 @@ export type GenerateCampaignOptions = Readonly<{
 }>;
 
 export type CampaignValidation = Readonly<{
+  scope?: "generation-and-render" | "render-only";
   valid: true;
   checks: ReadonlyArray<Readonly<{ id: string; passed: true }>>;
 }>;
@@ -33,6 +39,7 @@ export type CampaignTrace = Readonly<{
 }>;
 
 export type GenerateCampaignResult = Readonly<{
+  brand?: ResolvedBrand;
   campaign: Campaign;
   html: string;
   validation: CampaignValidation;
@@ -46,6 +53,7 @@ export async function generateCampaign(
   options: GenerateCampaignOptions,
 ): Promise<GenerateCampaignResult> {
   const run = await runCampaignPipeline(input, {
+    ...(options.reviewBrand ? { reviewBrand: options.reviewBrand } : {}),
     model: options.provider.textModel,
     ...(options.signal ? { signal: options.signal } : {}),
     ...(options.callTimeoutMs !== undefined
@@ -56,7 +64,10 @@ export async function generateCampaign(
       : {}),
   });
   const campaign = run.generation.finalCampaign;
-  const html = await renderCampaignHtml(campaign);
+  const html = await renderCampaignHtml(
+    campaign,
+    run.extraction.brand?.settings,
+  );
   const rendered = validateRenderedCampaign(campaign, html);
   const checks = [
     { id: "campaign-grounding", passed: true as const },
@@ -69,22 +80,24 @@ export async function generateCampaign(
 
   return {
     campaign,
+    ...(run.extraction.brand ? { brand: run.extraction.brand } : {}),
     html,
-    validation: { valid: true, checks },
+    validation: { valid: true, scope: "generation-and-render", checks },
     usage: run.generation.usage,
-    ...(options.trace
-      ? {
-          trace: {
-            brandProfile: run.extraction.context.brand,
-            productProfiles: run.extraction.context.products,
-            draft: run.generation.draft,
-            critique: run.generation.critique,
-            ...(run.generation.revisedCampaign
-              ? { revisedCampaign: run.generation.revisedCampaign }
-              : {}),
-            promptVersions: run.generation.promptVersions,
-          },
-        }
+    ...(options.trace ? { trace: campaignTrace(run) } : {}),
+  };
+}
+
+/** Selects only the approved redacted fields for an opt-in generation trace. */
+function campaignTrace(run: CampaignPipelineRun): CampaignTrace {
+  return {
+    brandProfile: run.extraction.context.brand,
+    productProfiles: run.extraction.context.products,
+    draft: run.generation.draft,
+    critique: run.generation.critique,
+    ...(run.generation.revisedCampaign
+      ? { revisedCampaign: run.generation.revisedCampaign }
       : {}),
+    promptVersions: run.generation.promptVersions,
   };
 }

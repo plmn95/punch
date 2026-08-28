@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 
-import { EMAIL_THEME } from "./render-theme.js";
+import type { RenderTheme } from "./brand-theme.js";
 
 export const RESPONSIVE_CSS = `
 body, table, td, a {
@@ -50,38 +50,43 @@ body, table, td, a {
 }
 `;
 
-export const pageStyle = {
+/** Creates pageStyle without changing shared render state. */
+export const pageStyle = (theme: RenderTheme): CSSProperties => ({
   WebkitTextSizeAdjust: "100%",
-  backgroundColor: EMAIL_THEME.colours.page,
-  color: EMAIL_THEME.colours.primary,
-  fontFamily: EMAIL_THEME.fonts.body,
+  backgroundColor: theme.colours.page,
+  color: theme.colours.primary,
+  fontFamily: theme.fonts.body,
   margin: "0",
   padding: "0",
   textSizeAdjust: "100%",
-} satisfies CSSProperties;
+});
 
-export const outerTableStyle = {
-  backgroundColor: EMAIL_THEME.colours.page,
+/** Creates outerTableStyle without changing shared render state. */
+export const outerTableStyle = (theme: RenderTheme): CSSProperties => ({
+  backgroundColor: theme.colours.page,
   borderCollapse: "collapse",
   width: "100%",
-} satisfies CSSProperties;
+});
 
-export const shellCellStyle = {
+/** Creates shellCellStyle without changing shared render state. */
+export const shellCellStyle = (): CSSProperties => ({
   padding: "32px 16px",
-} satisfies CSSProperties;
+});
 
-export const containerStyle = {
-  backgroundColor: EMAIL_THEME.colours.canvas,
-  border: `1px solid ${EMAIL_THEME.colours.border}`,
+/** Creates containerStyle without changing shared render state. */
+export const containerStyle = (theme: RenderTheme): CSSProperties => ({
+  backgroundColor: theme.colours.canvas,
+  border: `1px solid ${theme.colours.border}`,
   borderCollapse: "separate",
   borderRadius: "14px",
   boxShadow: "0 12px 32px rgba(47, 37, 31, 0.08)",
   maxWidth: "600px",
   overflow: "hidden",
   width: "100%",
-} satisfies CSSProperties;
+});
 
-export const preheaderStyle = {
+/** Creates preheaderStyle without changing shared render state. */
+export const preheaderStyle = (): CSSProperties => ({
   color: "transparent",
   display: "none",
   fontSize: "1px",
@@ -90,121 +95,167 @@ export const preheaderStyle = {
   maxWidth: "0",
   opacity: 0,
   overflow: "hidden",
-} satisfies CSSProperties;
+});
 
-export const sectionCellStyle = {
+/** Creates sectionCellStyle without changing shared render state. */
+export const sectionCellStyle = (): CSSProperties => ({
   padding: "24px 40px",
-} satisfies CSSProperties;
+});
 
-export const compactSectionCellStyle = {
+/** Creates compactSectionCellStyle without changing shared render state. */
+export const compactSectionCellStyle = (): CSSProperties => ({
   padding: "24px 40px",
   textAlign: "center",
-} satisfies CSSProperties;
+});
 
-export const centeredSectionCellStyle = {
+/** Creates centeredSectionCellStyle without changing shared render state. */
+export const centeredSectionCellStyle = (): CSSProperties => ({
   padding: "36px 40px 40px",
   textAlign: "center",
-} satisfies CSSProperties;
+});
 
-export const heroSectionCellStyle = {
-  backgroundColor: EMAIL_THEME.colours.card,
+/** Creates heroSectionCellStyle without changing shared render state. */
+export const heroSectionCellStyle = (theme: RenderTheme): CSSProperties => ({
+  backgroundColor: theme.colours.card,
   padding: "44px 40px",
   textAlign: "center",
-} satisfies CSSProperties;
+});
 
-export const headingSectionCellStyle = {
+/** Creates headingSectionCellStyle without changing shared render state. */
+export const headingSectionCellStyle = (): CSSProperties => ({
   padding: "32px 40px 8px",
-} satisfies CSSProperties;
+});
 
-export const bodySectionCellStyle = {
+/** Creates bodySectionCellStyle without changing shared render state. */
+export const bodySectionCellStyle = (): CSSProperties => ({
   padding: "0 40px 24px",
-} satisfies CSSProperties;
+});
 
-export const productSectionCellStyle = {
+/** Creates productSectionCellStyle without changing shared render state. */
+export const productSectionCellStyle = (): CSSProperties => ({
   padding: "16px 40px 24px",
-} satisfies CSSProperties;
+});
 
-export const wordmarkStyle = {
-  color: EMAIL_THEME.colours.primary,
-  fontFamily: EMAIL_THEME.fonts.display,
-  fontSize: `${EMAIL_THEME.typography.wordmark}px`,
+/** Creates wordmarkStyle without changing shared render state. */
+export const wordmarkStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.primary,
+  fontFamily: theme.fonts.display,
+  fontSize: `${theme.typography.wordmark}px`,
   fontWeight: 700,
   lineHeight: "32px",
   textDecoration: "none",
-} satisfies CSSProperties;
+});
 
-export const imageStyle = {
+/** Creates imageStyle without changing shared render state. */
+export const imageStyle = (): CSSProperties => ({
   border: "0",
   display: "block",
   height: "auto",
   maxWidth: "100%",
   outline: "none",
   textDecoration: "none",
-} satisfies CSSProperties;
+});
 
-export const fullWidthImageStyle = {
-  ...imageStyle,
+/** Creates fullWidthImageStyle without changing shared render state. */
+export const fullWidthImageStyle = (): CSSProperties => ({
+  ...imageStyle(),
   width: "100%",
-} satisfies CSSProperties;
+});
 
-export const heroImageStyle = {
-  ...fullWidthImageStyle,
+/** Creates heroImageStyle without changing shared render state. */
+export const heroImageStyle = (): CSSProperties => ({
+  ...fullWidthImageStyle(),
   borderRadius: "10px",
   marginBottom: "26px",
-} satisfies CSSProperties;
+});
 
-export const eyebrowStyle = {
-  color: EMAIL_THEME.colours.accent,
-  fontSize: `${EMAIL_THEME.typography.eyebrow}px`,
+/** Creates eyebrowStyle without changing shared render state. */
+export const eyebrowStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.link,
+  fontSize: `${theme.typography.eyebrow}px`,
   fontWeight: 700,
   letterSpacing: "1.2px",
   lineHeight: "18px",
   margin: "0 0 10px",
   textTransform: "uppercase",
-} satisfies CSSProperties;
+});
 
-export const heroHeadingStyle = {
-  color: EMAIL_THEME.colours.primary,
-  fontFamily: EMAIL_THEME.fonts.display,
-  fontSize: `${EMAIL_THEME.typography.hero}px`,
+/** Creates heroHeadingStyle without changing shared render state. */
+export const heroHeadingStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.primary,
+  fontFamily: theme.fonts.display,
+  fontSize: `${theme.typography.hero}px`,
   fontWeight: 700,
   lineHeight: "44px",
   margin: "0 0 16px",
-} satisfies CSSProperties;
+});
 
-export const headingTwoStyle = {
-  color: EMAIL_THEME.colours.primary,
-  fontFamily: EMAIL_THEME.fonts.display,
-  fontSize: `${EMAIL_THEME.typography.heading}px`,
+/** Creates headingTwoStyle without changing shared render state. */
+export const headingTwoStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.primary,
+  fontFamily: theme.fonts.display,
+  fontSize: `${theme.typography.heading}px`,
   fontWeight: 700,
   lineHeight: "34px",
   margin: "0",
-} satisfies CSSProperties;
+});
 
-export const headingThreeStyle = {
-  color: EMAIL_THEME.colours.primary,
-  fontFamily: EMAIL_THEME.fonts.display,
-  fontSize: `${EMAIL_THEME.typography.subheading}px`,
+/** Creates headingThreeStyle without changing shared render state. */
+export const headingThreeStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.primary,
+  fontFamily: theme.fonts.display,
+  fontSize: `${theme.typography.subheading}px`,
   fontWeight: 700,
   lineHeight: "28px",
   margin: "0",
-} satisfies CSSProperties;
+});
 
-export const bodyTextStyle = {
-  color: EMAIL_THEME.colours.body,
-  fontSize: `${EMAIL_THEME.typography.body}px`,
+/** Creates bodyTextStyle without changing shared render state. */
+export const bodyTextStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.body,
+  fontSize: `${theme.typography.body}px`,
   lineHeight: "25px",
   margin: "0",
-} satisfies CSSProperties;
+});
 
-export const bodyTextWithTopMarginStyle = {
-  ...bodyTextStyle,
+/** Creates bodyTextWithTopMarginStyle without changing shared render state. */
+export const bodyTextWithTopMarginStyle = (
+  theme: RenderTheme,
+): CSSProperties => ({
+  ...bodyTextStyle(theme),
   margin: "12px 0 0",
-} satisfies CSSProperties;
+});
 
-export const inlineLinkStyle = {
-  color: EMAIL_THEME.colours.accent,
-  fontSize: `${EMAIL_THEME.typography.body}px`,
+/** Creates inlineLinkStyle without changing shared render state. */
+export const inlineLinkStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.link,
+  fontSize: `${theme.typography.body}px`,
   lineHeight: "25px",
   textDecoration: "underline",
-} satisfies CSSProperties;
+});
+
+export const baseStyleFactories = {
+  pageStyle,
+  outerTableStyle,
+  shellCellStyle,
+  containerStyle,
+  preheaderStyle,
+  sectionCellStyle,
+  compactSectionCellStyle,
+  centeredSectionCellStyle,
+  heroSectionCellStyle,
+  headingSectionCellStyle,
+  bodySectionCellStyle,
+  productSectionCellStyle,
+  wordmarkStyle,
+  imageStyle,
+  fullWidthImageStyle,
+  heroImageStyle,
+  eyebrowStyle,
+  heroHeadingStyle,
+  headingTwoStyle,
+  headingThreeStyle,
+  bodyTextStyle,
+  bodyTextWithTopMarginStyle,
+  inlineLinkStyle,
+};

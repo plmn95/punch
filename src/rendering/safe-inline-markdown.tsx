@@ -4,7 +4,17 @@ import {
   tokeniseSafeInlineMarkdown,
   type SafeInlineMarkdownToken,
 } from "../core/inline-markdown.js";
-import { inlineLinkStyle } from "./styles.js";
+import { useRenderStyles } from "./render-style-context.js";
+
+/** Renders a safe Markdown link with this document's accessible brand colour. */
+function InlineLink({ href, text }: { href: string; text: string }) {
+  const { inlineLinkStyle } = useRenderStyles();
+  return (
+    <a data-punch-text-role="inline-link" href={href} style={inlineLinkStyle}>
+      {text}
+    </a>
+  );
+}
 
 /** Renders one restricted inline Markdown token without raw HTML. */
 function renderToken(token: SafeInlineMarkdownToken, key: number): ReactNode {
@@ -17,16 +27,7 @@ function renderToken(token: SafeInlineMarkdownToken, key: number): ReactNode {
   if (token.kind === "text") {
     return token.text;
   }
-  return (
-    <a
-      data-punch-text-role="inline-link"
-      href={token.href}
-      key={key}
-      style={inlineLinkStyle}
-    >
-      {token.text}
-    </a>
-  );
+  return <InlineLink key={key} href={token.href} text={token.text} />;
 }
 
 /** Converts the supported inline Markdown subset to safely escaped React nodes. */

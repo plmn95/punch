@@ -6,6 +6,11 @@ import type {
 } from "../core/schemas/index.js";
 import type { ModelUsage, TextModel } from "../providers/index.js";
 import type { PublicFetchSession } from "./http/index.js";
+import type {
+  BrandReviewer,
+  BrandStyleEvidence,
+  ResolvedBrand,
+} from "../brand/settings.js";
 
 export type ExtractionModelCall = Readonly<{
   stage: "extract-brand";
@@ -18,11 +23,13 @@ export type ExtractionUsage = Readonly<{
 }>;
 
 export type ExtractionResult = Readonly<{
+  brand?: ResolvedBrand;
   context: GenerationContext;
   usage: ExtractionUsage;
 }>;
 
 export type ExtractionOptions = Readonly<{
+  reviewBrand?: BrandReviewer;
   model?: TextModel;
   signal?: AbortSignal;
   fetchSession?: PublicFetchSession;
@@ -52,6 +59,7 @@ export type CssSource = Readonly<{
 }>;
 
 export type DeterministicBrandExtraction = Readonly<{
+  styleRoles: BrandStyleEvidence;
   evidence: BrandEvidence;
   segments: readonly SourceSegment[];
   stylesheetUrls: readonly string[];

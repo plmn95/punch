@@ -1,6 +1,7 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type { BodyParagraphBlock } from "../../core/schemas/index.js";
 import { renderSafeInlineMarkdown } from "../safe-inline-markdown.js";
-import { bodySectionCellStyle, bodyTextStyle } from "../styles.js";
+
 import { BlockFrame } from "./shared.js";
 
 type BodyParagraphProps = {
@@ -9,6 +10,7 @@ type BodyParagraphProps = {
 
 /** Renders one paragraph through Punch's restricted inline Markdown path. */
 export function BodyParagraph({ block }: BodyParagraphProps) {
+  const { bodySectionCellStyle, bodyTextStyle } = useRenderStyles();
   return (
     <BlockFrame
       blockId={block.id}

@@ -5,9 +5,11 @@ import {
 import { runGeneration, type GenerationRun } from "../generation/index.js";
 import type { TextModel } from "../providers/index.js";
 import type { PublicFetchSession } from "../extraction/http/index.js";
+import type { BrandReviewer } from "../brand/settings.js";
 
 /** Internal dependencies for extraction followed by semantic generation. */
 export type CampaignPipelineOptions = Readonly<{
+  reviewBrand?: BrandReviewer;
   model: TextModel;
   signal?: AbortSignal;
   fetchSession?: PublicFetchSession;
@@ -28,6 +30,7 @@ export async function runCampaignPipeline(
 ): Promise<CampaignPipelineRun> {
   const signal = options.signal ?? new AbortController().signal;
   const extraction = await extractGenerationContext(input, {
+    ...(options.reviewBrand ? { reviewBrand: options.reviewBrand } : {}),
     model: options.model,
     signal,
     ...(options.fetchSession ? { fetchSession: options.fetchSession } : {}),

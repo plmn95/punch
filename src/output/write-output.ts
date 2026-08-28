@@ -1,23 +1,10 @@
+import {
+  safeParentIdentity,
+  assertSameDirectory,
+} from "./filesystem-safety.js";
 import { randomUUID } from "node:crypto";
-import {
-  lstat,
-  mkdir,
-  realpath,
-  rename,
-  rm,
-  stat,
-  writeFile,
-} from "node:fs/promises";
-import {
-  basename,
-  dirname,
-  isAbsolute,
-  join,
-  parse,
-  relative,
-  resolve,
-  sep,
-} from "node:path";
+import { lstat, mkdir, rename, rm, writeFile } from "node:fs/promises";
+import { basename, dirname, isAbsolute, join, resolve, sep } from "node:path";
 
 import type { GenerateCampaignResult } from "../core/generate-campaign.js";
 import { buildOutputBundle } from "./artifact-builder.js";
@@ -28,6 +15,16 @@ export type WriteOutputOptions = Readonly<{
   force?: boolean;
   cwd?: string;
 }>;
+
+/** Checks an intended destination without creating files or reserving the path. */
+export async function assertOutputAvailable(
+  output: string,
+  force = false,
+): Promise<void> {
+  const destination = resolveOutput(output, process.cwd());
+  await safeParentIdentity(dirname(destination));
+  await assertDestinationMissing(destination, force);
+}
 
 /** Atomically publishes a complete result into one previously absent directory. */
 export async function writeCampaignOutput(
@@ -73,41 +70,6 @@ function resolveOutput(output: string, cwd: string): string {
     throw new OutputError("invalid-output-path");
   }
   return destination;
-}
-
-/** Resolves a real parent and rejects a symlink as its final component. */
-async function safeParentIdentity(
-  parent: string,
-): Promise<Readonly<{ real: string; dev: bigint; ino: bigint }>> {
-  try {
-    await assertNoLinkedAncestors(parent);
-    const info = await lstat(parent, { bigint: true });
-    if (!info.isDirectory() || info.isSymbolicLink()) {
-      throw new OutputError("unsafe-output-path");
-    }
-    const real = await realpath(parent);
-    const actual = await stat(real, { bigint: true });
-    return { real, dev: actual.dev, ino: actual.ino };
-  } catch (error) {
-    if (error instanceof OutputError) {
-      throw error;
-    }
-    throw new OutputError("invalid-output-path");
-  }
-}
-
-/** Rejects a symlink or non-directory anywhere in the existing parent chain. */
-async function assertNoLinkedAncestors(parent: string): Promise<void> {
-  const root = parse(parent).root;
-  const segments = relative(root, parent).split(sep).filter(Boolean);
-  let current = root;
-  for (const segment of segments) {
-    current = join(current, segment);
-    const info = await lstat(current);
-    if (!info.isDirectory() || info.isSymbolicLink()) {
-      throw new OutputError("unsafe-output-path");
-    }
-  }
 }
 
 /** Rejects every existing destination and fails closed for forced replacement. */
@@ -158,21 +120,6 @@ function safeRelativePath(value: string): boolean {
   return /^(?:[a-z][a-z0-9-]*\.(?:html|json)|trace\/[a-z][a-z0-9-]*\.json)$/u.test(
     value,
   );
-}
-
-/** Rechecks parent identity immediately before atomic publication. */
-async function assertSameDirectory(
-  parent: string,
-  expected: Readonly<{ real: string; dev: bigint; ino: bigint }>,
-): Promise<void> {
-  const actual = await safeParentIdentity(parent);
-  if (
-    actual.real !== expected.real ||
-    actual.dev !== expected.dev ||
-    actual.ino !== expected.ino
-  ) {
-    throw new OutputError("unsafe-output-path");
-  }
 }
 
 /** Removes only the unguessable staging directory owned by this invocation. */

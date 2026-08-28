@@ -37,6 +37,12 @@ import {
   type PublicFetchSession,
 } from "./http/index.js";
 import { applyBrandFallback } from "./model-fallback.js";
+import { resolveBrand } from "../brand/resolve-brand.js";
+import {
+  BrandStyleError,
+  parseBrandSettings,
+  type ResolvedBrand,
+} from "../brand/settings.js";
 
 type ProductSlot = Readonly<{
   productId: ProductId;
@@ -60,12 +66,15 @@ export async function extractGenerationContext(
   try {
     return await runExtraction(parsed, options, session, signal);
   } catch (error) {
-    if (error instanceof ExtractionError || error instanceof PublicFetchError) {
+    if (signal.aborted) throw new ExtractionError("cancelled", false);
+    if (
+      error instanceof ExtractionError ||
+      error instanceof PublicFetchError ||
+      error instanceof BrandStyleError
+    ) {
       throw error;
     }
     throw new ExtractionError("invalid-source", false);
-  } finally {
-    session.dispose();
   }
 }
 
@@ -76,15 +85,17 @@ async function runExtraction(
   session: PublicFetchSession,
   signal: AbortSignal,
 ): Promise<ExtractionResult> {
-  const deterministic = await extractDeterministicSources(
-    parsed,
-    session,
-    signal,
-  );
+  const deterministic = await readAndDisposeSources(parsed, session, signal);
   const productEvidence = deterministic.products.map(
     (extraction) => extraction.evidence,
   );
   assertMinimumProductEvidence(productEvidence);
+  const resolvedBrand = await reviewBrandStyles(
+    deterministic.brand,
+    parsed,
+    options,
+    signal,
+  );
   const calls: ExtractionModelCall[] = [];
   const brand = await applyBrandFallback(
     deterministic.brand.evidence,
@@ -94,7 +105,38 @@ async function runExtraction(
     calls,
   );
   const context = parseContext(parsed, brand, productEvidence);
-  return { context, usage: { total: aggregateUsage(calls), calls } };
+  return {
+    context,
+    brand: resolvedBrand,
+    usage: { total: aggregateUsage(calls), calls },
+  };
+}
+
+/** Releases network timers exactly once before human review or model work begins. */
+async function readAndDisposeSources(
+  input: GenerateCampaignInput,
+  session: PublicFetchSession,
+  signal: AbortSignal,
+): Promise<DeterministicSources> {
+  try {
+    return await extractDeterministicSources(input, session, signal);
+  } finally {
+    session.dispose();
+  }
+}
+
+/** Reviews deterministic style evidence before any optional model call. */
+async function reviewBrandStyles(
+  brand: DeterministicBrandExtraction,
+  input: GenerateCampaignInput,
+  options: ExtractionOptions,
+  signal: AbortSignal,
+): Promise<ResolvedBrand> {
+  const resolved = resolveBrand(brand.styleRoles, input.brand);
+  if (!options.reviewBrand) return resolved;
+  const overrides = parseBrandSettings(await options.reviewBrand(resolved));
+  assertExtractionNotAborted(signal);
+  return resolveBrand(brand.styleRoles, { ...input.brand, ...overrides });
 }
 
 /** Fetches and parses all deterministic brand and product evidence. */

@@ -11,8 +11,9 @@
 
 Punch turns one brand website and one to six product pages into a grounded,
 responsive ecommerce email. It extracts evidence, asks Claude for a semantic
-campaign, checks product and claim associations deterministically, then writes
-standalone HTML and machine-readable validation artifacts.
+campaign, checks product and claim associations deterministically, then renders
+it with configurable brand colours and fonts. The result is standalone HTML
+and machine-readable validation artifacts.
 
 It is an engine and CLI, not an ESP. Punch does not manage contacts, send
 messages or hide unsupported claims behind a confidence score.
@@ -39,28 +40,40 @@ the useful generative part while making commerce facts inspectable:
 - unknown or conflicted critical facts cannot be promoted to truth;
 - availability, promotion and selected high-risk claims require source support;
 - Claude produces semantic blocks, never raw layout HTML;
+- website style roles inform a validated brand theme, with explicit overrides
+  and readable fallbacks;
 - final HTML passes deterministic accessibility, geometry, resource and
   compliance-placeholder checks; and
 - public fetching rejects local/private networks, unsafe redirects, oversized
   responses and credential-bearing URLs.
 
-## Live showcase
+## One campaign, different looks
 
-<p align="center">
-  <img src="https://raw.githubusercontent.com/plmn95/punch/main/docs/showcase/northstar-campaign.png" alt="A live Punch campaign for the fictional Northstar Goods brand" width="700" />
-</p>
+Change colours and fonts without changing the products, copy or links, or
+making another AI call. These screenshots show the same fictional campaign
+rendered with two brand profiles, on desktop and mobile. Click either image
+to inspect it at full resolution.
 
-This campaign was generated live with Claude Sonnet 5 from two public, newly
-fictional product pages. The `sales` safety policy was combined with a custom
-desk-reset brief; both supplied products remained grounded and all ten campaign
-and render checks passed.
+<table>
+  <tr>
+    <th>Blue · desktop</th>
+    <th>Dark · mobile</th>
+  </tr>
+  <tr>
+    <td width="67%" valign="top"><a href="docs/showcase/branding/blue-desktop.jpg"><img src="docs/showcase/branding/blue-desktop.jpg" alt="Soft Orbit campaign with blue accents and Verdana headings on desktop" width="520" /></a></td>
+    <td width="33%" valign="top"><a href="docs/showcase/branding/dark-mobile.jpg"><img src="docs/showcase/branding/dark-mobile.jpg" alt="The same Soft Orbit campaign with a dark background, lime accents and monospace headings on mobile" width="250" /></a></td>
+  </tr>
+</table>
 
-[Inspect the brief, source commit and validation record](https://github.com/plmn95/punch/blob/main/docs/showcase/README.md).
+These are renderer examples, not fresh AI generations or automatic brand-detection
+results. [Reproduce them without an API key](docs/showcase/branding/README.md).
+For an end-to-end generation with source evidence and a validation record,
+see the [recorded Northstar Goods live run](docs/showcase/README.md).
 
 ## Quick start
 
-Punch currently ships from source. Node.js 24 or newer and an Anthropic API key
-are required.
+Punch currently ships from source. Node.js 24 or newer is required; an Anthropic
+API key is needed for generation, but not for rendering an existing campaign.
 
 ```bash
 git clone https://github.com/plmn95/punch.git
@@ -90,6 +103,51 @@ campaign/
 Add `--trace` for redacted structured stage artifacts or `--json` for exactly
 one terminal JSON result on stdout. Run `node dist/cli/bin.js --help` for the
 complete explicit interface.
+
+### Guided input and brand settings
+
+Run `node dist/cli/bin.js` in a terminal to start the optional guide. It collects
+website/product URLs and the campaign brief, shows detected colours and fonts,
+then asks for confirmation **before any AI call**. Keep the detected settings
+with Enter, change individual six-digit hex colours or font families, preview
+the actual email in a browser, and export when ready.
+
+Complete commands stay prompt-free. Add `--interactive` to request review even
+with complete inputs. `--json`, `--no-interactive`, CI and non-TTY input/output
+always disable prompting.
+
+```bash
+node dist/cli/bin.js generate \
+  --website "https://example.com" \
+  --product "https://example.com/products/first-product" \
+  --goal "sales" \
+  --primary-colour "#2563EB" \
+  --heading-font "Verdana" \
+  --save-brand "./brand.json" \
+  --output "./campaign"
+```
+
+Use `--brand ./brand.json` to reuse a saved profile. Explicit flags override
+the profile; supplied settings override website detection. Output paths and
+profile filenames must be new; Punch never overwrites an existing profile.
+
+### Restyle without another AI call
+
+The guide's **adjust branding** action re-renders the same campaign without
+changing its copy or spending more model tokens. Saved campaigns can also be
+restyled without an API key:
+
+```bash
+node dist/cli/bin.js render \
+  --campaign "./campaign/campaign.json" \
+  --primary-colour "#006644" \
+  --output "./campaign-green"
+```
+
+Render-only output is explicitly labelled `render-only` in its validation
+metadata: it checks the HTML, not current product facts or source grounding.
+Saved campaign settings are retained unless overridden. See
+[brand settings and CLI behaviour](docs/brand-settings.md) for the full contract.
 
 ## Custom campaign briefs
 
@@ -186,6 +244,9 @@ artifact is not automatically ready for lawful sending.
 ## Current limits
 
 - Anthropic is the only supported provider.
+- Brand detection is conservative, not a pixel-perfect website clone. Colours
+  and fonts can be overridden; custom font files are not downloaded or embedded.
+- Browser checks are not certification across all email clients.
 - Input is one website plus one to six explicit product URLs.
 - Punch does not discover products or crawl a catalogue.
 - Safe forced directory replacement is unavailable in `0.1.0`; choose a fresh

@@ -5,6 +5,7 @@ import type {
 } from "../core/generate-campaign.js";
 import type { Campaign, ProductId } from "../core/schemas/index.js";
 import type { GenerationUsage } from "../providers/index.js";
+import type { ResolvedBrand } from "../brand/settings.js";
 
 export const ARTIFACT_SCHEMA_VERSION = "0.1.0";
 export const TRACE_SCHEMA_VERSION = "0.1.0";
@@ -25,6 +26,8 @@ export type ArtifactDescriptor = Readonly<{
 }>;
 
 export type CampaignDocument = Readonly<{
+  brand?: ResolvedBrand;
+  validationScope?: "generation-and-render" | "render-only";
   generator: "punch";
   artifactSchemaVersion: string;
   status: "valid";

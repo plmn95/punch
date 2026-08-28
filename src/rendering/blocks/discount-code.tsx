@@ -1,10 +1,6 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type { DiscountCodeBlock } from "../../core/schemas/index.js";
-import { discountCodeStyle, discountPanelStyle } from "../commerce-styles.js";
-import {
-  bodyTextWithTopMarginStyle,
-  headingThreeStyle,
-  sectionCellStyle,
-} from "../styles.js";
+
 import { BlockFrame } from "./shared.js";
 
 type DiscountCodeProps = {
@@ -26,6 +22,8 @@ function formatOfferDate(value: string): string {
 
 /** Renders the explicit promotion facts inside the discount panel. */
 function DiscountContent({ block }: DiscountCodeProps) {
+  const { headingThreeStyle, bodyTextWithTopMarginStyle, discountCodeStyle } =
+    useRenderStyles();
   return (
     <>
       {block.heading === undefined ? null : (
@@ -62,6 +60,7 @@ function DiscountContent({ block }: DiscountCodeProps) {
 
 /** Renders only the explicit fields carried by a promotion-code block. */
 export function DiscountCode({ block }: DiscountCodeProps) {
+  const { sectionCellStyle, discountPanelStyle } = useRenderStyles();
   return (
     <BlockFrame
       blockId={block.id}

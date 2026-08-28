@@ -1,10 +1,7 @@
+import { useRenderStyles } from "./render-style-context.js";
 import type { Campaign } from "../core/schemas/index.js";
 import { DispatchBlock } from "./dispatch-block.js";
-import {
-  complianceLinkStyle,
-  complianceParagraphStyle,
-  complianceStyle,
-} from "./commerce-styles.js";
+
 import {
   COMPLIANCE_VERSION,
   EMAIL_WIDTH,
@@ -12,14 +9,7 @@ import {
   RENDER_VERSION,
   UNSUBSCRIBE_PLACEHOLDER,
 } from "./render-contract.js";
-import {
-  containerStyle,
-  outerTableStyle,
-  pageStyle,
-  preheaderStyle,
-  RESPONSIVE_CSS,
-  shellCellStyle,
-} from "./styles.js";
+import { RESPONSIVE_CSS } from "./styles.js";
 
 type EmailDocumentProps = {
   readonly campaign: Campaign;
@@ -27,6 +17,8 @@ type EmailDocumentProps = {
 
 /** Renders Punch-owned compliance chrome after all generated blocks. */
 function ComplianceFooter() {
+  const { complianceStyle, complianceParagraphStyle, complianceLinkStyle } =
+    useRenderStyles();
   return (
     <tr data-punch-compliance={COMPLIANCE_VERSION}>
       <td data-punch-text-role="compliance" style={complianceStyle}>
@@ -49,6 +41,7 @@ function ComplianceFooter() {
 
 /** Renders the fixed-width campaign table and owned compliance footer. */
 function CampaignContainer({ campaign }: EmailDocumentProps) {
+  const { containerStyle } = useRenderStyles();
   return (
     <table
       border={0}
@@ -71,6 +64,7 @@ function CampaignContainer({ campaign }: EmailDocumentProps) {
 
 /** Centres the campaign container on the email page background. */
 function EmailCanvas({ campaign }: EmailDocumentProps) {
+  const { outerTableStyle, shellCellStyle } = useRenderStyles();
   return (
     <table
       border={0}
@@ -97,6 +91,7 @@ function EmailCanvas({ campaign }: EmailDocumentProps) {
 
 /** Builds the standalone email document around validated semantic blocks. */
 export function EmailDocument({ campaign }: EmailDocumentProps) {
+  const { pageStyle, preheaderStyle } = useRenderStyles();
   return (
     <html data-punch-render={RENDER_VERSION} lang="en">
       <head>

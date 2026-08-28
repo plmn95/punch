@@ -50,6 +50,10 @@ function campaignDocument(result: GenerateCampaignResult): CampaignDocument {
     goal: result.campaign.goal,
     productIds: [...new Set(productIds)],
     campaign: result.campaign,
+    ...(result.brand ? { brand: result.brand } : {}),
+    ...(result.validation.scope
+      ? { validationScope: result.validation.scope }
+      : {}),
   };
 }
 

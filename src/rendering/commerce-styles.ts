@@ -1,134 +1,175 @@
 import type { CSSProperties } from "react";
 
-import { EMAIL_THEME } from "./render-theme.js";
+import type { RenderTheme } from "./brand-theme.js";
 
-export const productNameStyle = {
-  color: EMAIL_THEME.colours.primary,
-  fontFamily: EMAIL_THEME.fonts.display,
-  fontSize: `${EMAIL_THEME.typography.product}px`,
+/** Creates productNameStyle without changing shared render state. */
+export const productNameStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.primary,
+  fontFamily: theme.fonts.display,
+  fontSize: `${theme.typography.product}px`,
   fontWeight: 700,
   lineHeight: "28px",
   margin: "0 0 10px",
-} satisfies CSSProperties;
+});
 
-export const productPriceStyle = {
-  color: EMAIL_THEME.colours.primary,
-  fontSize: `${EMAIL_THEME.typography.body}px`,
+/** Creates productPriceStyle without changing shared render state. */
+export const productPriceStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.primary,
+  fontSize: `${theme.typography.body}px`,
   fontWeight: 700,
   lineHeight: "22px",
   margin: "12px 0 0",
-} satisfies CSSProperties;
+});
 
-export const cardStyle = {
-  backgroundColor: EMAIL_THEME.colours.card,
-  border: `1px solid ${EMAIL_THEME.colours.border}`,
+/** Creates cardStyle without changing shared render state. */
+export const cardStyle = (theme: RenderTheme): CSSProperties => ({
+  backgroundColor: theme.colours.card,
+  border: `1px solid ${theme.colours.border}`,
   borderCollapse: "separate",
   borderRadius: "12px",
   overflow: "hidden",
   width: "100%",
-} satisfies CSSProperties;
+});
 
-export const imageFreeCardStyle = {
-  ...cardStyle,
-  borderTop: `4px solid ${EMAIL_THEME.colours.accent}`,
-} satisfies CSSProperties;
+/** Creates imageFreeCardStyle without changing shared render state. */
+export const imageFreeCardStyle = (theme: RenderTheme): CSSProperties => ({
+  ...cardStyle(theme),
+  borderTop: `4px solid ${theme.colours.accent}`,
+});
 
-export const cardContentStyle = {
+/** Creates cardContentStyle without changing shared render state. */
+export const cardContentStyle = (): CSSProperties => ({
   padding: "18px",
-} satisfies CSSProperties;
+});
 
-export const productCopyCellStyle = {
+/** Creates productCopyCellStyle without changing shared render state. */
+export const productCopyCellStyle = (): CSSProperties => ({
   verticalAlign: "top",
-} satisfies CSSProperties;
+});
 
-export const featurePanelStyle = {
-  backgroundColor: EMAIL_THEME.colours.card,
-  border: `1px solid ${EMAIL_THEME.colours.border}`,
+/** Creates featurePanelStyle without changing shared render state. */
+export const featurePanelStyle = (theme: RenderTheme): CSSProperties => ({
+  backgroundColor: theme.colours.card,
+  border: `1px solid ${theme.colours.border}`,
   borderCollapse: "separate",
   borderRadius: "12px",
   overflow: "hidden",
   width: "100%",
-} satisfies CSSProperties;
+});
 
-export const imageFreeFeaturePanelStyle = {
-  ...featurePanelStyle,
-  borderTop: `5px solid ${EMAIL_THEME.colours.accent}`,
-} satisfies CSSProperties;
+/** Creates imageFreeFeaturePanelStyle without changing shared render state. */
+export const imageFreeFeaturePanelStyle = (
+  theme: RenderTheme,
+): CSSProperties => ({
+  ...featurePanelStyle(theme),
+  borderTop: `5px solid ${theme.colours.accent}`,
+});
 
-export const buttonTableStyle = {
+/** Creates buttonTableStyle without changing shared render state. */
+export const buttonTableStyle = (): CSSProperties => ({
   borderCollapse: "separate",
   margin: "20px auto 0",
-} satisfies CSSProperties;
+});
 
-export const buttonCellStyle = {
-  backgroundColor: EMAIL_THEME.colours.accent,
+/** Creates buttonCellStyle without changing shared render state. */
+export const buttonCellStyle = (theme: RenderTheme): CSSProperties => ({
+  backgroundColor: theme.colours.accent,
   borderRadius: "8px",
-  height: `${EMAIL_THEME.geometry.ctaHeight}px`,
+  height: `${theme.geometry.ctaHeight}px`,
   textAlign: "center",
-} satisfies CSSProperties;
+});
 
-export const buttonLinkStyle = {
+/** Creates buttonLinkStyle without changing shared render state. */
+export const buttonLinkStyle = (theme: RenderTheme): CSSProperties => ({
   boxSizing: "border-box",
-  color: EMAIL_THEME.colours.buttonText,
+  color: theme.colours.buttonText,
   display: "inline-block",
-  fontSize: `${EMAIL_THEME.typography.button}px`,
+  fontSize: `${theme.typography.button}px`,
   fontWeight: 700,
-  lineHeight: `${EMAIL_THEME.geometry.ctaLineHeight}px`,
-  minHeight: `${EMAIL_THEME.geometry.ctaHeight}px`,
-  padding: `${EMAIL_THEME.geometry.ctaVerticalPadding}px 22px`,
+  lineHeight: `${theme.geometry.ctaLineHeight}px`,
+  minHeight: `${theme.geometry.ctaHeight}px`,
+  padding: `${theme.geometry.ctaVerticalPadding}px 22px`,
   textDecoration: "none",
-} satisfies CSSProperties;
+});
 
-export const compactButtonTableStyle = {
-  ...buttonTableStyle,
+/** Creates compactButtonTableStyle without changing shared render state. */
+export const compactButtonTableStyle = (): CSSProperties => ({
+  ...buttonTableStyle(),
   width: "100%",
-} satisfies CSSProperties;
+});
 
-export const compactButtonLinkStyle = {
-  ...buttonLinkStyle,
+/** Creates compactButtonLinkStyle without changing shared render state. */
+export const compactButtonLinkStyle = (theme: RenderTheme): CSSProperties => ({
+  ...buttonLinkStyle(theme),
   paddingLeft: "12px",
   paddingRight: "12px",
   width: "100%",
-} satisfies CSSProperties;
+});
 
-export const discountPanelStyle = {
-  backgroundColor: EMAIL_THEME.colours.promotion,
-  border: `1px solid ${EMAIL_THEME.colours.promotionBorder}`,
+/** Creates discountPanelStyle without changing shared render state. */
+export const discountPanelStyle = (theme: RenderTheme): CSSProperties => ({
+  backgroundColor: theme.colours.promotion,
+  border: `1px solid ${theme.colours.promotionBorder}`,
   borderCollapse: "separate",
   borderRadius: "12px",
   width: "100%",
-} satisfies CSSProperties;
+});
 
-export const discountCodeStyle = {
-  backgroundColor: EMAIL_THEME.colours.code,
-  border: `1px dashed ${EMAIL_THEME.colours.accent}`,
+/** Creates discountCodeStyle without changing shared render state. */
+export const discountCodeStyle = (theme: RenderTheme): CSSProperties => ({
+  backgroundColor: theme.colours.code,
+  border: `1px dashed ${theme.colours.accent}`,
   borderRadius: "6px",
-  color: EMAIL_THEME.colours.primary,
+  color: theme.colours.primary,
   display: "inline-block",
-  fontSize: `${EMAIL_THEME.typography.discountCode}px`,
+  fontSize: `${theme.typography.discountCode}px`,
   fontWeight: 700,
   letterSpacing: "2px",
   lineHeight: "26px",
   marginTop: "16px",
   padding: "10px 16px",
-} satisfies CSSProperties;
+});
 
-export const complianceStyle = {
-  borderTop: `1px solid ${EMAIL_THEME.colours.border}`,
-  color: EMAIL_THEME.colours.compliance,
-  fontSize: `${EMAIL_THEME.typography.compliance}px`,
+/** Creates complianceStyle without changing shared render state. */
+export const complianceStyle = (theme: RenderTheme): CSSProperties => ({
+  borderTop: `1px solid ${theme.colours.border}`,
+  color: theme.colours.compliance,
+  fontSize: `${theme.typography.compliance}px`,
   lineHeight: "18px",
   padding: "24px 40px 32px",
   textAlign: "center",
-} satisfies CSSProperties;
+});
 
-export const complianceParagraphStyle = {
+/** Creates complianceParagraphStyle without changing shared render state. */
+export const complianceParagraphStyle = (): CSSProperties => ({
   margin: "0 0 8px",
-} satisfies CSSProperties;
+});
 
-export const complianceLinkStyle = {
-  color: EMAIL_THEME.colours.compliance,
-  fontSize: `${EMAIL_THEME.typography.compliance}px`,
+/** Creates complianceLinkStyle without changing shared render state. */
+export const complianceLinkStyle = (theme: RenderTheme): CSSProperties => ({
+  color: theme.colours.compliance,
+  fontSize: `${theme.typography.compliance}px`,
   lineHeight: "18px",
   textDecoration: "underline",
-} satisfies CSSProperties;
+});
+
+export const commerceStyleFactories = {
+  productNameStyle,
+  productPriceStyle,
+  cardStyle,
+  imageFreeCardStyle,
+  cardContentStyle,
+  productCopyCellStyle,
+  featurePanelStyle,
+  imageFreeFeaturePanelStyle,
+  buttonTableStyle,
+  buttonCellStyle,
+  buttonLinkStyle,
+  compactButtonTableStyle,
+  compactButtonLinkStyle,
+  discountPanelStyle,
+  discountCodeStyle,
+  complianceStyle,
+  complianceParagraphStyle,
+  complianceLinkStyle,
+};

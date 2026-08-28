@@ -1,10 +1,7 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type { HeaderStandardBlock } from "../../core/schemas/index.js";
 import { renderHttpUrl } from "../render-contract.js";
-import {
-  compactSectionCellStyle,
-  imageStyle,
-  wordmarkStyle,
-} from "../styles.js";
+
 import { BlockFrame } from "./shared.js";
 
 type HeaderStandardProps = {
@@ -13,6 +10,8 @@ type HeaderStandardProps = {
 
 /** Renders the campaign brand header as a linked logo or text wordmark. */
 export function HeaderStandard({ block }: HeaderStandardProps) {
+  const { compactSectionCellStyle, wordmarkStyle, imageStyle } =
+    useRenderStyles();
   return (
     <BlockFrame
       blockId={block.id}

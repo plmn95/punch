@@ -1,15 +1,6 @@
+import { useRenderStyles } from "../render-style-context.js";
 import type { ProductFeatureBlock } from "../../core/schemas/index.js";
-import {
-  featurePanelStyle,
-  imageFreeFeaturePanelStyle,
-  productNameStyle,
-  productPriceStyle,
-} from "../commerce-styles.js";
-import {
-  bodyTextStyle,
-  eyebrowStyle,
-  productSectionCellStyle,
-} from "../styles.js";
+
 import { formatMoney } from "../render-contract.js";
 import { BlockFrame, EmailButton, ProductImage } from "./shared.js";
 
@@ -35,6 +26,8 @@ function ProductFeatureMedia({ block }: ProductFeatureProps) {
 
 /** Renders the featured product facts and its associated CTA. */
 function ProductFeatureCopy({ block }: ProductFeatureProps) {
+  const { eyebrowStyle, productNameStyle, bodyTextStyle, productPriceStyle } =
+    useRenderStyles();
   return (
     <tr>
       <td style={{ padding: "28px" }}>
@@ -76,6 +69,7 @@ function ProductFeatureCopy({ block }: ProductFeatureProps) {
 
 /** Renders one complete featured-product presentation table. */
 function ProductFeaturePanel({ block }: ProductFeatureProps) {
+  const { imageFreeFeaturePanelStyle, featurePanelStyle } = useRenderStyles();
   return (
     <table
       border={0}
@@ -103,6 +97,7 @@ function ProductFeaturePanel({ block }: ProductFeatureProps) {
 
 /** Renders one featured product with an explicitly associated CTA. */
 export function ProductFeature({ block }: ProductFeatureProps) {
+  const { productSectionCellStyle } = useRenderStyles();
   return (
     <BlockFrame
       blockId={block.id}

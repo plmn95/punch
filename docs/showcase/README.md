@@ -1,5 +1,9 @@
 # Live Northstar Goods showcase
 
+This is the original recorded generation, captured before brand-aware rendering
+was added. Its neutral theme is retained as historical evidence. For the current
+configurable renderer, see the [blue and dark brand examples](branding/README.md).
+
 ![Generated Northstar Goods campaign](northstar-campaign.png)
 
 This is a real Punch generation from public HTTP input through Claude Sonnet 5,

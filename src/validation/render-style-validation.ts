@@ -1,3 +1,5 @@
+import { contrastRatio } from "../brand/colour.js";
+export { contrastRatio } from "../brand/colour.js";
 import {
   MIN_COMPLIANCE_FONT_SIZE,
   MIN_CONTENT_FONT_SIZE,
@@ -26,48 +28,6 @@ const REQUIRED_ROLES = [
 ] as const;
 
 const COMPLIANCE_ROLES = new Set(["compliance", "compliance-link"]);
-
-/** Parses one opaque six-digit hexadecimal colour. */
-function parseHexColour(value: unknown): [number, number, number] | undefined {
-  if (typeof value !== "string" || !/^#[\da-f]{6}$/iu.test(value)) {
-    return undefined;
-  }
-  return [1, 3, 5].map((offset) =>
-    Number.parseInt(value.slice(offset, offset + 2), 16),
-  ) as [number, number, number];
-}
-
-/** Converts one sRGB channel to relative luminance. */
-function lineariseChannel(value: number): number {
-  const channel = value / 255;
-  return channel <= 0.04045
-    ? channel / 12.92
-    : ((channel + 0.055) / 1.055) ** 2.4;
-}
-
-/** Returns the relative luminance for one opaque colour tuple. */
-function luminance([red, green, blue]: [number, number, number]): number {
-  return (
-    0.2126 * lineariseChannel(red) +
-    0.7152 * lineariseChannel(green) +
-    0.0722 * lineariseChannel(blue)
-  );
-}
-
-/** Returns the WCAG contrast ratio for two supported opaque colours. */
-export function contrastRatio(
-  foreground: unknown,
-  background: unknown,
-): number | undefined {
-  const foregroundRgb = parseHexColour(foreground);
-  const backgroundRgb = parseHexColour(background);
-  if (foregroundRgb === undefined || backgroundRgb === undefined) {
-    return undefined;
-  }
-  const first = luminance(foregroundRgb);
-  const second = luminance(backgroundRgb);
-  return (Math.max(first, second) + 0.05) / (Math.min(first, second) + 0.05);
-}
 
 /** Parses a non-negative pixel value from one rendered style property. */
 export function stylePixels(value: unknown): number | undefined {
