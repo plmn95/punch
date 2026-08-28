@@ -44,6 +44,19 @@ the useful generative part while making commerce facts inspectable:
 - public fetching rejects local/private networks, unsafe redirects, oversized
   responses and credential-bearing URLs.
 
+## Live showcase
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/plmn95/punch/main/docs/showcase/northstar-campaign.png" alt="A live Punch campaign for the fictional Northstar Goods brand" width="700" />
+</p>
+
+This campaign was generated live with Claude Sonnet 5 from two public, newly
+fictional product pages. The `sales` safety policy was combined with a custom
+desk-reset brief; both supplied products remained grounded and all ten campaign
+and render checks passed.
+
+[Inspect the brief, source commit and validation record](https://github.com/plmn95/punch/blob/main/docs/showcase/README.md).
+
 ## Quick start
 
 Punch currently ships from source. Node.js 24 or newer and an Anthropic API key

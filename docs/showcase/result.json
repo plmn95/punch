@@ -1,0 +1,57 @@
+{
+  "showcaseSchemaVersion": "0.1.0",
+  "generatedOn": "2026-08-28",
+  "model": "claude-sonnet-5",
+  "sourceCommit": "ac59faf96b47b9ee6fafee6f360cb5c03c59d38f",
+  "goal": "sales",
+  "instructions": "Create a concise desk-reset gift guide for people building calmer daily routines. Feature both products equally.",
+  "subject": "A calmer desk, two useful things at a time",
+  "preheader": "Meet the Orbit Catchall and Daybreak Pouch from Northstar Goods.",
+  "blockTypes": [
+    "header-standard",
+    "hero-stacked",
+    "product-grid",
+    "cta-block"
+  ],
+  "products": [
+    {
+      "productId": "product-01",
+      "name": "Orbit Catchall",
+      "amount": "34.00",
+      "currency": "GBP"
+    },
+    {
+      "productId": "product-02",
+      "name": "Daybreak Pouch",
+      "amount": "28.00",
+      "currency": "GBP"
+    }
+  ],
+  "validation": {
+    "valid": true,
+    "checks": [
+      "campaign-grounding",
+      "campaign-claims",
+      "render-contrast",
+      "render-font-floor",
+      "render-cta-height",
+      "render-html-bytes",
+      "render-grid-geometry",
+      "render-compliance",
+      "render-resource-urls",
+      "render-product-binding"
+    ]
+  },
+  "generation": {
+    "calls": ["emit:primary", "critique:primary"],
+    "inputTokens": 76354,
+    "outputTokens": 7990,
+    "revised": false
+  },
+  "capture": {
+    "path": "northstar-campaign.png",
+    "width": 700,
+    "height": 1052,
+    "sha256": "a7e63ea6dc897fc3c4fff290844d487a965bf36d798cde7e554341c629d0d34c"
+  }
+}
