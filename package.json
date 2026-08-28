@@ -1,9 +1,8 @@
 {
   "name": "punch-email",
-  "version": "0.0.0-development",
+  "version": "0.1.0",
   "description": "Grounded ecommerce email generation engine",
-  "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "type": "module",
   "engines": {
     "node": ">=24"
@@ -11,6 +10,9 @@
   "packageManager": "npm@11.17.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": {
+    "punch": "./dist/cli/bin.js"
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -18,7 +20,9 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "sideEffects": false,
   "scripts": {
@@ -32,6 +36,7 @@
     "pack:check": "npm pack --dry-run --json"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "0.122.0",
     "@react-email/render": "2.1.0",
     "htmlparser2": "8.0.2",
     "postcss": "8.5.24",

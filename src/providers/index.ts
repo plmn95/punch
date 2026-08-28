@@ -1,5 +1,11 @@
 export { callModel } from "./call-model.js";
 export {
+  DEFAULT_ANTHROPIC_MODEL,
+  createAnthropicProvider,
+  type AnthropicProviderOptions,
+  type PunchProvider,
+} from "./anthropic.js";
+export {
   createLinkedDeadline,
   throwIfModelAborted,
   type LinkedDeadline,

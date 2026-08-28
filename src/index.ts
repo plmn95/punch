@@ -33,3 +33,35 @@ export type {
   ProductEvidence,
   ProductId,
 } from "./core/schemas/index.js";
+
+export {
+  generateCampaign,
+  type CampaignTrace,
+  type CampaignValidation,
+  type GenerateCampaignOptions,
+  type GenerateCampaignResult,
+} from "./core/generate-campaign.js";
+
+export {
+  DEFAULT_ANTHROPIC_MODEL,
+  createAnthropicProvider,
+  type AnthropicProviderOptions,
+  type PunchProvider,
+} from "./providers/anthropic.js";
+
+export {
+  ARTIFACT_SCHEMA_VERSION,
+  REDACTION_POLICY_VERSION,
+  TRACE_SCHEMA_VERSION,
+  OutputError,
+  buildOutputBundle,
+  writeCampaignOutput,
+  type ArtifactDescriptor,
+  type CampaignDocument,
+  type OutputArtifact,
+  type OutputBundle,
+  type OutputErrorCode,
+  type TraceManifest,
+  type ValidationDocument,
+  type WriteOutputOptions,
+} from "./output/index.js";
