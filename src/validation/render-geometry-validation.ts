@@ -200,8 +200,7 @@ function imageGeometryPasses(campaign: Campaign, html: string): boolean {
     actual.every((tag, index) => {
       const image = expected[index];
       const role = exactAttribute(tag, "data-punch-image-role") as
-        | RenderImageRole
-        | undefined;
+        RenderImageRole | undefined;
       const width = Number(exactAttribute(tag, "width"));
       const style = exactAttribute(tag, "style") ?? "";
       return (
