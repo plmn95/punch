@@ -3,6 +3,22 @@
   "version": "0.1.0",
   "description": "Grounded ecommerce email generation engine",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/plmn95/punch.git"
+  },
+  "homepage": "https://github.com/plmn95/punch#readme",
+  "bugs": {
+    "url": "https://github.com/plmn95/punch/issues"
+  },
+  "keywords": [
+    "email",
+    "ecommerce",
+    "anthropic",
+    "claude",
+    "generation",
+    "react-email"
+  ],
   "type": "module",
   "engines": {
     "node": ">=24"
@@ -22,11 +38,13 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "sideEffects": false,
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
+    "prepack": "npm run build",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "eslint . --max-warnings 0",

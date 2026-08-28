@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-labelledby="title description">
+  <title id="title">Punch</title>
+  <desc id="description">Grounded ecommerce email generation from source pages to validated HTML.</desc>
+  <rect width="1200" height="320" rx="28" fill="#17223B"/>
+  <circle cx="1018" cy="80" r="180" fill="#F46B5D" opacity="0.18"/>
+  <circle cx="1128" cy="270" r="128" fill="#F8C15C" opacity="0.14"/>
+  <g transform="translate(72 62)">
+    <rect width="58" height="58" rx="17" fill="#F46B5D"/>
+    <path d="M18 17h20c8 0 13 5 13 13s-5 13-13 13H29v9H18V17Zm11 10v7h8c2 0 3-1 3-4s-1-3-3-3h-8Z" fill="#FFF8EF"/>
+    <text x="78" y="48" fill="#FFF8EF" font-family="ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="62" font-weight="760" letter-spacing="-2">Punch</text>
+    <text x="2" y="102" fill="#BFC9DB" font-family="ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,sans-serif" font-size="24">Grounded ecommerce email generation.</text>
+  </g>
+  <g transform="translate(72 222)" font-family="ui-monospace,SFMono-Regular,Menlo,monospace" font-size="15">
+    <rect width="190" height="44" rx="10" fill="#233252" stroke="#405174"/>
+    <text x="95" y="28" text-anchor="middle" fill="#E9EEF8">source pages</text>
+    <path d="M274 22h42" stroke="#F46B5D" stroke-width="3" stroke-linecap="round"/>
+    <path d="m311 16 8 6-8 6" fill="none" stroke="#F46B5D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="332" width="190" height="44" rx="10" fill="#233252" stroke="#405174"/>
+    <text x="427" y="28" text-anchor="middle" fill="#E9EEF8">semantic campaign</text>
+    <path d="M536 22h42" stroke="#F46B5D" stroke-width="3" stroke-linecap="round"/>
+    <path d="m573 16 8 6-8 6" fill="none" stroke="#F46B5D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="594" width="190" height="44" rx="10" fill="#233252" stroke="#405174"/>
+    <text x="689" y="28" text-anchor="middle" fill="#E9EEF8">deterministic checks</text>
+    <path d="M798 22h42" stroke="#F46B5D" stroke-width="3" stroke-linecap="round"/>
+    <path d="m835 16 8 6-8 6" fill="none" stroke="#F46B5D" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="856" width="190" height="44" rx="10" fill="#233252" stroke="#405174"/>
+    <text x="951" y="28" text-anchor="middle" fill="#E9EEF8">responsive HTML</text>
+  </g>
+</svg>
