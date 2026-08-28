@@ -56,7 +56,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "0.122.0",
     "@react-email/render": "2.1.0",
-    "htmlparser2": "8.0.2",
+    "htmlparser2": "12.0.0",
     "postcss": "8.5.26",
     "react": "19.2.8",
     "react-dom": "19.2.8",
