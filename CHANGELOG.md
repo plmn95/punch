@@ -11,3 +11,6 @@ First public release candidate.
 - Responsive standalone React Email renderer with compliance placeholders.
 - Explicit `punch generate` CLI and composable TypeScript API.
 - Atomic new-directory output with optional redacted structured traces.
+- Sonnet 5 plain-JSON compatibility with adaptive thinking explicitly disabled.
+- Live-tested provider deadlines of 120 seconds per call and 360 seconds per
+  campaign.

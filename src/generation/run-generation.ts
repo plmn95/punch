@@ -43,8 +43,8 @@ import {
 } from "./stage-invariants.js";
 import { callStructured } from "./structured-call.js";
 
-const DEFAULT_CALL_TIMEOUT_MS = 60_000;
-const DEFAULT_RUN_TIMEOUT_MS = 180_000;
+const DEFAULT_CALL_TIMEOUT_MS = 120_000;
+const DEFAULT_RUN_TIMEOUT_MS = 360_000;
 
 /** Configured generation dependencies and engine-owned deadline bounds. */
 export type GenerationEngineOptions = Readonly<{

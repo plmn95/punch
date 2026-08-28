@@ -21,27 +21,30 @@ describe("Anthropic provider adapter", () => {
   it("normalises text, stop reason and token usage", async () => {
     vi.stubGlobal(
       "fetch",
-      vi.fn(
-        async () =>
-          new Response(
-            JSON.stringify({
-              id: "msg_test",
-              type: "message",
-              role: "assistant",
-              model: "claude-sonnet-5",
-              content: [{ type: "text", text: '{"ok":true}' }],
-              stop_reason: "end_turn",
-              stop_sequence: null,
-              usage: {
-                input_tokens: 12,
-                output_tokens: 6,
-                cache_creation_input_tokens: null,
-                cache_read_input_tokens: null,
-              },
-            }),
-            { status: 200, headers: { "content-type": "application/json" } },
-          ),
-      ),
+      vi.fn(async (_input: string | URL | Request, init?: RequestInit) => {
+        const body = JSON.parse(String(init?.body)) as {
+          thinking?: unknown;
+        };
+        expect(body.thinking).toEqual({ type: "disabled" });
+        return new Response(
+          JSON.stringify({
+            id: "msg_test",
+            type: "message",
+            role: "assistant",
+            model: "claude-sonnet-5",
+            content: [{ type: "text", text: '{"ok":true}' }],
+            stop_reason: "end_turn",
+            stop_sequence: null,
+            usage: {
+              input_tokens: 12,
+              output_tokens: 6,
+              cache_creation_input_tokens: null,
+              cache_read_input_tokens: null,
+            },
+          }),
+          { status: 200, headers: { "content-type": "application/json" } },
+        );
+      }),
     );
     const provider = createAnthropicProvider({ apiKey: "fictional-test-key" });
 

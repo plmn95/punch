@@ -44,6 +44,19 @@ the useful generative part while making commerce facts inspectable:
 - public fetching rejects local/private networks, unsafe redirects, oversized
   responses and credential-bearing URLs.
 
+## Live showcase
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/plmn95/punch/main/docs/showcase/northstar-campaign.png" alt="A live Punch campaign for the fictional Northstar Goods brand" width="700" />
+</p>
+
+This campaign was generated live with Claude Sonnet 5 from two public, newly
+fictional product pages. The `sales` safety policy was combined with a custom
+desk-reset brief; both supplied products remained grounded and all ten campaign
+and render checks passed.
+
+[Inspect the brief, source commit and validation record](https://github.com/plmn95/punch/blob/main/docs/showcase/README.md).
+
 ## Quick start
 
 Punch currently ships from source. Node.js 24 or newer and an Anthropic API key
@@ -77,6 +90,37 @@ campaign/
 Add `--trace` for redacted structured stage artifacts or `--json` for exactly
 one terminal JSON result on stdout. Run `node dist/cli/bin.js --help` for the
 complete explicit interface.
+
+## Custom campaign briefs
+
+Punch has three fixed goal policies and open-ended campaign direction. Keep the
+factual rules of `sales`, `product-launch` or `promotion`, then add a bounded
+brief with `--instructions`:
+
+```bash
+node dist/cli/bin.js generate \
+  --website "https://example.com" \
+  --product "https://example.com/products/first-product" \
+  --goal "sales" \
+  --instructions "Create a concise gift guide for first-time buyers." \
+  --output "./campaign"
+```
+
+Useful briefs include a buying angle, intended reader, hierarchy or tone. They
+cannot authorise invented facts, unknown products, unsupported offers or a
+different goal policy. In other words: three safety modes, unlimited campaign
+briefs.
+
+The same seam is available through the TypeScript API:
+
+```ts
+const giftGuide = {
+  goal: "sales" as const,
+  instructions: "Create a gift guide organised by recipient.",
+};
+
+await generateCampaign({ website, products, ...giftGuide }, { provider });
+```
 
 ## TypeScript API
 

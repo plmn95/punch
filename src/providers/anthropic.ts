@@ -62,6 +62,7 @@ function createTextModel(client: Anthropic, modelId: string): TextModel {
           {
             model: modelId,
             max_tokens: request.maxOutputTokens,
+            thinking: { type: "disabled" },
             system: request.system,
             messages: [{ role: "user", content: request.user }],
           },

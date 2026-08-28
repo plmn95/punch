@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Orbit Catchall</title>
+  <desc id="desc">A coral rounded tray with a navy centre on a warm background.</desc>
+  <rect width="900" height="600" fill="#fff1db"/>
+  <ellipse cx="450" cy="480" rx="300" ry="45" fill="#17223b" opacity=".12"/>
+  <rect x="145" y="125" width="610" height="330" rx="115" fill="#f46b5d" transform="rotate(-4 450 290)"/>
+  <rect x="205" y="180" width="490" height="220" rx="82" fill="#17223b" transform="rotate(-4 450 290)"/>
+  <circle cx="590" cy="255" r="42" fill="#78c8d3"/>
+  <rect x="330" y="230" width="185" height="34" rx="17" fill="#fffaf1" transform="rotate(17 422 247)"/>
+</svg>
