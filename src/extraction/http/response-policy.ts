@@ -4,9 +4,7 @@ import type { TransportResponse } from "./node-transport.js";
 
 export type ResourceKind = "html" | "stylesheet";
 export type PermittedMediaType =
-  | "text/html"
-  | "application/xhtml+xml"
-  | "text/css";
+  "text/html" | "application/xhtml+xml" | "text/css";
 
 /** Validates bounded raw headers and contradictory response framing. */
 export function validateHeaders(

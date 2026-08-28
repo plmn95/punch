@@ -15,12 +15,7 @@ export const UNSUBSCRIBE_PLACEHOLDER = "{{unsubscribe_url}}";
 export const PHYSICAL_ADDRESS_PLACEHOLDER = "{{physical_address}}";
 
 export type RenderImageRole =
-  | "feature"
-  | "grid-2"
-  | "grid-3"
-  | "grid-4"
-  | "hero"
-  | "logo";
+  "feature" | "grid-2" | "grid-3" | "grid-4" | "hero" | "logo";
 
 const RESERVED_PLACEHOLDERS = [
   UNSUBSCRIBE_PLACEHOLDER,
