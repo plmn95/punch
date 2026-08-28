@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 96" role="img" aria-labelledby="title">
+  <title id="title">Northstar Goods</title>
+  <rect width="440" height="96" rx="24" fill="#17223b"/>
+  <path d="m46 21 7.4 19.6L73 48l-19.6 7.4L46 75l-7.4-19.6L19 48l19.6-7.4Z" fill="#f46b5d"/>
+  <circle cx="46" cy="48" r="7" fill="#fffaf1"/>
+  <text x="92" y="59" fill="#fffaf1" font-family="Arial, sans-serif" font-size="31" font-weight="700" letter-spacing="1">NORTHSTAR GOODS</text>
+</svg>

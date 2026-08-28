@@ -78,6 +78,37 @@ Add `--trace` for redacted structured stage artifacts or `--json` for exactly
 one terminal JSON result on stdout. Run `node dist/cli/bin.js --help` for the
 complete explicit interface.
 
+## Custom campaign briefs
+
+Punch has three fixed goal policies and open-ended campaign direction. Keep the
+factual rules of `sales`, `product-launch` or `promotion`, then add a bounded
+brief with `--instructions`:
+
+```bash
+node dist/cli/bin.js generate \
+  --website "https://example.com" \
+  --product "https://example.com/products/first-product" \
+  --goal "sales" \
+  --instructions "Create a concise gift guide for first-time buyers." \
+  --output "./campaign"
+```
+
+Useful briefs include a buying angle, intended reader, hierarchy or tone. They
+cannot authorise invented facts, unknown products, unsupported offers or a
+different goal policy. In other words: three safety modes, unlimited campaign
+briefs.
+
+The same seam is available through the TypeScript API:
+
+```ts
+const giftGuide = {
+  goal: "sales" as const,
+  instructions: "Create a gift guide organised by recipient.",
+};
+
+await generateCampaign({ website, products, ...giftGuide }, { provider });
+```
+
 ## TypeScript API
 
 ```ts
